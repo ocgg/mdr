@@ -3,15 +3,16 @@
 Restructurer l'app comme suit:
 
 - Main class (= controller), le point d'entrée
-- Main envoie le fichier brut au Parser qui retourne un MdDocument
-- MdDocument est globalement un array de Block (paragraphe, list, text, title etc.)
+- Main envoie le fichier brut au Parser qui stocke un array de Block 
+- Les Blocks sont: paragraphe, list, title etc.
 
-  - Chaque Block a un type (title/list), un sous-type (h3/unordered), (plus?), un contenu
+  - Chaque Block a un un contenu et ses propres variables d'instance
+  - Chaque type de Block (Paragraph, List etc.) hérite de Block
   - Le contenu est un array de Text, ou un hash (dans le cas d'une liste: arborescence)
   - Le contenu est formaté dans la classe Block
   - Chaque Text a des styles (normal / bold, italic) et un contenu
 
-- Main envoie le MdDocument au Renderer qui:
+- Main envoie les Blocks du Parser au Renderer qui:
 
   - Gère le rendu chaque type de Block
   - Incorpore les séquences d'échappement dans les Text

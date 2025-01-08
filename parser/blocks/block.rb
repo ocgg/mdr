@@ -14,4 +14,14 @@ class Block
   def strip_and_squeeze(str)
     str.strip.squeeze(" ").squeeze("\n")
   end
+
+  # RENDERING #################################################################
+
+  def to_lines
+    if @opts[:word_wrap]
+      str.scan(/\S.{0,#{width - 2}}\S(?=\s|$)|\S+/)
+    else
+      str.chars.each_slice(width).map(&:join)
+    end
+  end
 end

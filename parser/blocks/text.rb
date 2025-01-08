@@ -26,6 +26,7 @@ class Text
   /x
 
   class Span
+    attr_reader :content
     def initialize(content, *styles)
       @content = content
       @styles = styles
