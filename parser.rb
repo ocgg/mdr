@@ -34,13 +34,12 @@ class Parser
       List,
       Paragraph
     ]
-    blocks = raw.scan(/#{BLOCK_REGEXS.values.join("|")}/).map do |data|
+    raw.scan(/#{BLOCK_REGEXS.values.join("|")}/).map do |data|
       # find index of non-nil data
       id = data.find_index { |match| !match.nil? }
       type = types[id]
       content = data[id]
       type.new(content)
     end
-    # pp blocks
   end
 end

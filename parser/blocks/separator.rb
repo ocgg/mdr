@@ -1,6 +1,6 @@
 require_relative "block"
 
 class Separator < Block
-  def initialize(content = nil)
+  def initialize(_)
   end
 end
