@@ -8,6 +8,7 @@ Restructurer l'app comme suit:
 
   - Chaque Block a un type (title/list), un sous-type (h3/unordered), (plus?), un contenu
   - Le contenu est un array de Text, ou un hash (dans le cas d'une liste: arborescence)
+  - Le contenu est formaté dans la classe Block
   - Chaque Text a des styles (normal / bold, italic) et un contenu
 
 - Main envoie le MdDocument au Renderer qui:

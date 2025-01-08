@@ -1,5 +1,7 @@
 require_relative "parser/block"
 
+# Parser parse a raw markdown file and translate it into Block objects.
+# NB: content formatting happens in Block class.
 class Parser
   attr_reader :blocks
 
@@ -23,9 +25,9 @@ class Parser
   # Receive a raw string possibly dirty markdown,
   # Ouputs a list string with indented, squeezed, un-newlined lines.
   def format_list(list)
-    list.squeeze("\n").split("\n").reduce("") do |acc, line|
-      next line if acc.empty?
-      next "#{acc} #{strip_and_squeeze(line)}" unless line.match?(/(^\s*- )/)
+    list.squeeze("\n").split("\n").reduce("") do |result, line|
+      next line if result.empty?
+      next "#{result} #{strip_and_squeeze(line)}" unless line.match?(/(^\s*- )/)
 
       indent_level = case line
       when /^\s?- / then 0
@@ -34,7 +36,7 @@ class Parser
       end
       indent = "  " * indent_level
 
-      "#{acc}\n#{indent}#{strip_and_squeeze(line)}"
+      "#{result}\n#{indent}#{strip_and_squeeze(line)}"
     end
   end
 
@@ -42,24 +44,6 @@ class Parser
     str.strip.squeeze(" ").squeeze("\n")
   end
 
-  # PARSING ###################################################################
-
-  def block_from(type, content)
-    p content
-    content = case type
-    when :codeblock then content
-    when :unord_list then format_list(content)
-    when :title, :separator, :table, :paragraph
-      strip_and_squeeze(content)
-    else
-      content
-    end
-
-    {type:, content:}
-  end
-
-  # Splits raw markdown file at 2 or more newlines
-  # return an array of hashes representing blocks with keys :title & :content
   def parse(raw)
     types = [
       :title,
@@ -74,9 +58,9 @@ class Parser
       id = data.find_index { |match| !match.nil? }
       type = types[id]
       content = data[id]
-      block_from(type, content)
+      Block.new(type: type, content: content)
     end
-    pp blocks
+    blocks
     raise
     # Should return a MdDocument
   end

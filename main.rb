@@ -2,6 +2,10 @@ require_relative "renderer"
 require_relative "parser"
 
 # This is the entry point and the main controller.
+# Main receives a filepath at instanciation,
+# Sends it to the Parser which returns a MdDocument,
+# Then sends MdDocument to the Renderer which returns an array of lines,
+# Then displays the lines regarding to the CLI arguments received
 class Main
   def initialize(filepath)
     @filepath = filepath
