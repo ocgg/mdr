@@ -1,12 +1,11 @@
-class Span
-  def initialize(content, *styles)
-    @content = content
-    @styles = styles
-  end
-end
-
 class Text
   attr_reader :spans
+
+  def initialize(formatted_string)
+    @spans = format(formatted_string)
+  end
+
+  private
 
   TEXT_REGEXP = /
     # prefix
@@ -26,13 +25,14 @@ class Text
     .*?
   /x
 
-  def initialize(formatted_string)
-    @spans = format(formatted_string)
+  class Span
+    def initialize(content, *styles)
+      @content = content
+      @styles = styles
+    end
   end
 
-  private
-
-  def delimiter_to_style(content, delimiter)
+  def delimiter_to_style(delimiter)
     case delimiter
     when "***", "___" then [:bold, :italic]
     when "**", "__" then [:bold]
@@ -56,14 +56,12 @@ class Text
     results << Span.new(beforematch, *styles.flatten) unless beforematch.empty?
 
     content = md[:content]
-    # pp "############\nCONTENT: #{format(content)}\n###############"
     delimiter = md[:open_tag]
-    styles << delimiter_to_style(content, delimiter)
+    styles << delimiter_to_style(delimiter)
     spans_from(content, results, styles)
 
     aftermatch = $'
     spans_from(aftermatch, results, styles)
-    results
   end
 
   def format(string)
