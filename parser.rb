@@ -41,6 +41,6 @@ class Parser
       content = data[id]
       type.new(content)
     end
-    blocks
+    pp blocks
   end
 end

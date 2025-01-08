@@ -1,6 +1,12 @@
 require_relative "block"
+require_relative "text"
 
 class List < Block
+  def initialize(content)
+    super
+    parse_text_content
+  end
+
   private
 
   def find_parent(item, diff)
@@ -11,13 +17,19 @@ class List < Block
     end
   end
 
-  def format(content)
-    content = content.squeeze("\n").split("\n")
-    first_line = strip_and_squeeze(content.first)[2..]
+  def parse_text_content
+    @content.each do |item|
+      item[:content] = Text.new(item[:content])
+    end
+  end
+
+  def format(string)
+    string = string.squeeze("\n").split("\n")
+    first_line = strip_and_squeeze(string.first)[2..]
     first_item = {indent_level: 0, parent: nil, content: first_line, children: []}
     last_added = first_item
 
-    content[1..].each_with_object([first_item]) do |line, items|
+    string[1..].each_with_object([first_item]) do |line, items|
       left_part = line.slice!(/^\s*- /)
 
       unless left_part
