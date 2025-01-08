@@ -11,15 +11,6 @@ class Block
 
   private
 
-  # def format(content)
-  #   case @type
-  #   when :codeblock then content
-  #   when :unord_list then list_content(content)
-  #   else
-  #     strip_and_squeeze(content)
-  #   end
-  # end
-
   def strip_and_squeeze(str)
     str.strip.squeeze(" ").squeeze("\n")
   end

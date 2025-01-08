@@ -3,7 +3,6 @@ require_relative "styles"
 module InlineBlocks
   include Styles
 
-  # This was a good try.
   REGEXP = /
     # prefix
     (?<=(?<beforebegin>\W))?
