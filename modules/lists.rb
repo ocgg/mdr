@@ -11,7 +11,7 @@ module Lists
     str = render_inline_chunks(str)
     lines = to_lines_with_style(str, keep_indent: true, word_wrap: true)
 
-    prev_line = ""
+    # prev_line = ""
 
     pp lines
 

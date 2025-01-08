@@ -1,4 +1,9 @@
-require_relative "parser/block"
+require_relative "parser/blocks/title"
+require_relative "parser/blocks/separator"
+require_relative "parser/blocks/codeblock"
+require_relative "parser/blocks/table"
+require_relative "parser/blocks/list"
+require_relative "parser/blocks/paragraph"
 
 # Parser parse a raw markdown file and translate it into Block objects.
 # NB: content formatting happens in Block class.
@@ -46,22 +51,21 @@ class Parser
 
   def parse(raw)
     types = [
-      :title,
-      :separator,
-      :table,
-      :codeblock,
-      :unord_list,
-      :paragraph
+      Title,
+      Separator,
+      Table,
+      Codeblock,
+      List,
+      Paragraph
     ]
     blocks = raw.scan(/#{REGEXS.values.join("|")}/).map do |data|
       # find index of non-nil data
       id = data.find_index { |match| !match.nil? }
       type = types[id]
       content = data[id]
-      Block.new(type: type, content: content)
+      type.new(content)
     end
-    blocks
-    raise
+    pp blocks
     # Should return a MdDocument
   end
 end

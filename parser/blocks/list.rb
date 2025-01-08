@@ -1,30 +1,7 @@
-# Block receives a type and raw content from the Parser.
-# It formats its content regarding to its type.
-class Block
-  attr_reader :content
+require_relative "block"
 
-  def initialize(**args)
-    @type = args[:type]
-    # @spec = nil
-    @content = format(args[:content])
-  end
-
+class List < Block
   private
-
-  def format(content)
-    case @type
-    when :codeblock then content
-    when :unord_list then list_content(content)
-    else
-      strip_and_squeeze(content)
-    end
-  end
-
-  def strip_and_squeeze(str)
-    str.strip.squeeze(" ").squeeze("\n")
-  end
-
-  # LIST ######################################################################
 
   def find_parent(item, diff)
     if diff.positive? then item
@@ -34,7 +11,7 @@ class Block
     end
   end
 
-  def list_content(content)
+  def format(content)
     content = content.squeeze("\n").split("\n")
     first_line = strip_and_squeeze(content.first)[2..]
     first_item = {indent_level: 0, parent: nil, content: first_line, children: []}
