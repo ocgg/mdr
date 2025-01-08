@@ -1,29 +1,24 @@
+require_relative "parser/block"
+
 class Parser
-  attr_reader :chunks
+  attr_reader :blocks
 
   REGEXS = {
-    title: /^\s{0,3}(?<title>\#{1,6} .+)$/,
-    separator: /^\s{0,3}(?<separator>[-*]{3,})$/,
-    table: /^\s{0,3}(?<table>(?:\|[^|\n]*\n?)+)/,
-    # TODO: theses should be simpler
-    codeblock: /^\s{0,3}(?<all>```(?<cb_lang>[^\n]*?)\n(?<cb_content>(?:.|\n)*?)```)/,
-    unord_list: /^\s{0,3}(?<unord_list>(?:\s*- .*(?:\n.+)*(?:\n+|$))+)/,
-    paragraph: /^\s{0,3}(?<paragraph>.*)/
+    title: /^\s{0,3}(\#{1,6} .+)$/,
+    separator: /^\s{0,3}([-*]{3,})$/,
+    table: /^\s{0,3}((?:\|[^|\n]*\n?)+)/,
+    codeblock: /^\s{0,3}(```\w*?\n(?:.|\n)*?```)/,
+    unord_list: /^\s{0,3}((?:\s*- .*(?:\n.+)*(?:\n+|$))+)/,
+    paragraph: /^\s{0,3}(.*)/
   }
 
   def initialize(raw)
-    @chunks = parse(raw)
+    @blocks = parse(raw)
   end
 
   private
 
   # FORMATING #################################################################
-
-  def format_codeblock(codeblock)
-    lang = codeblock.match(/^```(.*)$/)[1]
-    code = codeblock.split("\n")[1..-2].join("\n")
-    {lang:, code:}
-  end
 
   # Receive a raw string possibly dirty markdown,
   # Ouputs a list string with indented, squeezed, un-newlined lines.
@@ -49,9 +44,10 @@ class Parser
 
   # PARSING ###################################################################
 
-  def chunk_from(type, content)
+  def block_from(type, content)
+    p content
     content = case type
-    when :codeblock then format_codeblock(content)
+    when :codeblock then content
     when :unord_list then format_list(content)
     when :title, :separator, :table, :paragraph
       strip_and_squeeze(content)
@@ -63,25 +59,25 @@ class Parser
   end
 
   # Splits raw markdown file at 2 or more newlines
-  # return an array of hashes representing chunks with keys :title & :content
-  # TODO: fix time complexity
+  # return an array of hashes representing blocks with keys :title & :content
   def parse(raw)
     types = [
       :title,
       :separator,
       :table,
-      :codeblock, # all
-      :codeblock, # lang
-      :codeblock, # content
+      :codeblock,
       :unord_list,
       :paragraph
     ]
-    raw.scan(/#{REGEXS.values.join("|")}/).map do |data|
+    blocks = raw.scan(/#{REGEXS.values.join("|")}/).map do |data|
       # find index of non-nil data
       id = data.find_index { |match| !match.nil? }
       type = types[id]
       content = data[id]
-      chunk_from(type, content)
+      block_from(type, content)
     end
+    pp blocks
+    raise
+    # Should return a MdDocument
   end
 end
