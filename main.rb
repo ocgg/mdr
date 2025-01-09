@@ -12,7 +12,7 @@ class Main
     @parser = Parser.new(File.read(md_filepath))
     # pp @parser.blocks
     @renderer = Renderer.new(@parser.blocks)
-    pp @renderer.result
+    @renderer.result
   end
 end
 

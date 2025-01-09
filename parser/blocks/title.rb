@@ -13,7 +13,8 @@ class Title < Block
   def format(string)
     sharps = string.slice!(/^#* /).size - 1
     @level = sharps
-    Text.new(string)
+    opts = (@level < 6) ? {default_styles: [:bold]} : {}
+    Text.new(string, **opts)
   end
 
   # RENDERING #################################################################
@@ -30,8 +31,10 @@ class Title < Block
     # "#{upline}\n#{midlines}\n#{downline}"
 
     # TODO: stylize and columnize
-    title = @content.spans.map(&:content).join.center(@width - 4)
-    midline = "#{side} #{title} #{side}"
-    puts "#{upline}\n#{midline}\n#{downline}"
+    opts = {width: @width - 4, align: :center}
+    title = content_to_lines(**opts).map do |line|
+      "#{side} #{line} #{side}"
+    end.join("\n")
+    puts "#{upline}\n#{title}\n#{downline}"
   end
 end

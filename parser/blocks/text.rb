@@ -1,7 +1,8 @@
 class Text
   attr_reader :spans
 
-  def initialize(formatted_string)
+  def initialize(formatted_string, **opts)
+    @styles = opts[:default_styles] || []
     @spans = format(formatted_string)
   end
 
@@ -26,7 +27,8 @@ class Text
   /x
 
   class Span
-    attr_reader :content
+    attr_reader :content, :styles
+
     def initialize(content, *styles)
       @content = content
       @styles = styles
@@ -45,21 +47,23 @@ class Text
     end
   end
 
-  def spans_from(string, results = [], styles = [])
+  def spans_from(string, results = [], styles = @styles)
     md = string.match(TEXT_REGEXP)
     unless md
-      results << Span.new(string, *styles.flatten) unless string.empty?
-      styles.pop # keep this here
+      unless string.empty?
+        results << Span.new(string, *styles)
+      end
       return results
     end
 
     beforematch = $`
-    results << Span.new(beforematch, *styles.flatten) unless beforematch.empty?
+    results << Span.new(beforematch, *styles) unless beforematch.empty?
 
     content = md[:content]
     delimiter = md[:open_tag]
-    styles << delimiter_to_style(delimiter)
+    styles += delimiter_to_style(delimiter)
     spans_from(content, results, styles)
+    styles.pop # keep this here
 
     aftermatch = $'
     spans_from(aftermatch, results, styles)
