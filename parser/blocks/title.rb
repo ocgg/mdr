@@ -5,7 +5,12 @@ class Title < Block
 
   def render(**opts)
     @width = opts[:width]
-    send(:"h#{@level}")
+    case @level
+    when 1 then h1
+    when 2 then h2
+    else
+      generic_title
+    end
   end
 
   private
@@ -13,11 +18,26 @@ class Title < Block
   def format(string)
     sharps = string.slice!(/^#* /).size - 1
     @level = sharps
-    opts = (@level < 6) ? {default_styles: [:bold]} : {}
+    opts = case @level
+    when 1 then {default_styles: [:bold]}
+    when 2 then {default_styles: [:bold]}
+    when 3 then {default_styles: [:bold, :underline]}
+    when 4 then {default_styles: [:underline]}
+    when 5 then {default_styles: [:bold, :dim]}
+    when 6 then {default_styles: [:dim]}
+    end
     Text.new(string, **opts)
   end
 
   # RENDERING #################################################################
+
+  def generic_title = content_to_lines.join("\n")
+
+  def h2
+    downline = "─" * @width
+    title = content_to_lines.join("\n")
+    "#{title}\n#{downline}"
+  end
 
   def h1
     upline = "┌#{"─" * (@width - 2)}┐"
@@ -28,6 +48,6 @@ class Title < Block
     title = content_to_lines(**opts).map do |line|
       "#{side} #{line} #{side}"
     end.join("\n")
-    puts "#{upline}\n#{title}\n#{downline}"
+    "#{upline}\n#{title}\n#{downline}"
   end
 end

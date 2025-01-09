@@ -36,6 +36,7 @@ class LinesHelper
 
   STYLES = {
     bold: 1,
+    dim: 2,
     italic: 3,
     underline: 4,
     strike: 9
@@ -48,6 +49,7 @@ class LinesHelper
     @align = align
     @lines = []
     @line = ""
+    @just_resetted = true
     @count = 0
   end
 
