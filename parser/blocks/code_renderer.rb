@@ -18,9 +18,6 @@ class CodeRenderer
   def codeblock(code, lang)
     upline = "#{COL_SEQ}#{codeblock_separator(lang)}#{NOSTYLE}"
     downline = "#{COL_SEQ}#{codeblock_separator}#{NOSTYLE}"
-
-    # TODO: fill, to line, padding
-    # code.gsub!(/(\e\[0m)/, "\1#{BGCOL_SEQ}")
     midlines = code_with_escapes_to_lines(code).join("\n")
 
     "#{upline}\n#{midlines}\n#{downline}"
@@ -45,6 +42,12 @@ class CodeRenderer
     @lines << @line
   end
 
+  def reset_line
+    # Reset new line, with undergoing style & opts styles
+    @line = @seq_stack.reverse.join + BGCOL_SEQ + " "
+    @count = 1
+  end
+
   def reset_line_styles
     @seq_stack = []
     @line += NOSTYLE + BGCOL_SEQ
@@ -59,6 +62,8 @@ class CodeRenderer
 
   def is_seq?(chunk) = chunk.match?(/\e\[[\d;]*m/)
 
+  def end_of_line?(char) = @count == @width - 1 || char == "\n"
+
   def code_with_escapes_to_lines(code)
     chunks = code.split(/(\e\[[\d;]*m)/).reject(&:empty?)
 
@@ -68,11 +73,9 @@ class CodeRenderer
 
       chunk.each_char do |char|
         # If end of line
-        if @count == @width - 1 || char == "\n"
+        if end_of_line?(char)
           finish_line
-          # Reset new line, with undergoing style & opts styles
-          @line = @seq_stack.reverse.join + BGCOL_SEQ + " "
-          @count = 1
+          reset_line
         end
         next if char == "\n"
 
@@ -82,21 +85,5 @@ class CodeRenderer
     end
     finish_line
     @lines
-  end
-
-  class << self
-    # def spans_to_string(spans)
-    #   spans.map do |span|
-    #     seq = seq_from(span.styles)
-    #     "#{seq.empty? ? NOSTYLE : seq}#{span.content}#{NOSTYLE}"
-    #   end.join
-    # end
-    #
-    # # Returns the corresponding escape sequence from styles names
-    # def seq_from(stylenames)
-    #   return "" if stylenames.empty?
-    #   stylenames.map! { |name| STYLES[name] }
-    #   "\e[#{stylenames.join(";")}m"
-    # end
   end
 end
