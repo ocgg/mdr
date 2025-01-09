@@ -11,8 +11,8 @@ class Main
     # @last_modified = File.mtime(filepath).strftime("%Y-%m-%d %H:%M")
     @parser = Parser.new(File.read(md_filepath))
     @renderer = Renderer.new(@parser.blocks)
-    puts @renderer.result.join("\n\n")
+    @renderer.result.join("\n\n")
   end
 end
 
-Main.new "MD_TEST_mini.md"
+Main.new "MD_SUMMARY.md"

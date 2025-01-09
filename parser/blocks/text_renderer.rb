@@ -13,14 +13,28 @@ class TextRenderer
   }
   NOSTYLE = "\e[0m"
 
-  def initialize(width, word_wrap, align)
-    @word_wrap = word_wrap
+  def initialize(width, align)
     @width = width
     @align = align
     @lines = []
     @line = ""
     @just_resetted = true
     @count = 0
+  end
+
+  def codeblock(code, lang)
+    bgcol_seq = "\e[48;2;45;45;45;m"
+    col_seq = "\e[38;2;45;45;45;m"
+
+    upline = "#{col_seq}#{codeblock_separator(lang)}#{NOSTYLE}"
+    downline = "#{col_seq}#{codeblock_separator}#{NOSTYLE}"
+
+    code.gsub!(/(\e\[0m)/, "\1#{bgcol_seq}")
+    midline = "#{bgcol_seq}#{code}#{NOSTYLE}"
+
+    # TODO: fill, to line, padding
+
+    "#{upline}\n#{midline}\n#{downline}"
   end
 
   def make_lines!(span)
@@ -52,6 +66,15 @@ class TextRenderer
   end
 
   private
+
+  def codeblock_separator(lang = nil)
+    return "▀" * @width if lang.nil? || lang.empty?
+
+    lang_seq = "\e[38;2;120;120;120;m"
+    right = "#{lang_seq} #{lang} #{NOSTYLE}"
+    left = "▄" * (@width - (lang.size + 2))
+    "#{left}#{right}"
+  end
 
   def line_empty?
     @line == "" || @just_resetted
