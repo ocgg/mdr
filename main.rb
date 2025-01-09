@@ -10,9 +10,8 @@ class Main
   def initialize(md_filepath)
     # @last_modified = File.mtime(filepath).strftime("%Y-%m-%d %H:%M")
     @parser = Parser.new(File.read(md_filepath))
-    # pp @parser.blocks
     @renderer = Renderer.new(@parser.blocks)
-    @renderer.result
+    puts @renderer.result.join("\n\n")
   end
 end
 
