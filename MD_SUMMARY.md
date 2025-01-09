@@ -29,7 +29,7 @@ Let's print an `inline code` in this one. And with ``backticks `in it` ?``
 ---
 
 | This is | an actual | Taabeeeeeuuuul |
-|---------|-----------|----------------|
+|:--------|:---------:|---------------:|
 | With | random | columns |
 | just **to be     sure** | *that*          it | `works` |
 | And | it | should |
