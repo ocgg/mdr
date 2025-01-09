@@ -20,7 +20,7 @@ class Block
   # RENDERING #################################################################
 
   def content_to_lines(width: @width, word_wrap: true, align: nil)
-    lines_helper = LinesHelper.new(width, word_wrap, align)
+    lines_helper = ColumnMaker.new(width, word_wrap, align)
 
     @content.spans.each_with_object(lines_helper) do |span, lh|
       lh.make_lines!(span)
@@ -30,7 +30,7 @@ class Block
   end
 end
 
-class LinesHelper
+class ColumnMaker
   attr_reader :lines
   attr_accessor :line, :count
 
@@ -40,6 +40,8 @@ class LinesHelper
     italic: 3,
     underline: 4,
     strike: 9
+    # CUSTOM
+    # inline_code:
   }
   NOSTYLE = "\e[0m"
 
@@ -58,10 +60,11 @@ class LinesHelper
     span_styles = seq_from(span.styles)
     @line += span_styles
 
+    # TODO/TOFIX: space & styles managment
     words = span.content.split(" ")
     add_space_to_line if !line_empty? && fits_in_line?(words[0])
-    @just_resetted = false
 
+    @just_resetted = false
     words.each_with_index do |word, i|
       if fits_in_line?(word)
         add_word_to_line(word)

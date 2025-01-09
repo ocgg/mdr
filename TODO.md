@@ -42,7 +42,7 @@ Restructurer l'app comme suit:
 
 ## BUGFIXES
 
-- inline styles
+- inline styles: content_to_line à revoir & corriger
 
 ## TODO DANS LONGTEMPS
 
