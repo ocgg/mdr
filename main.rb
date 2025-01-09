@@ -11,7 +11,7 @@ class Main
     # @last_modified = File.mtime(filepath).strftime("%Y-%m-%d %H:%M")
     @parser = Parser.new(File.read(md_filepath))
     @renderer = Renderer.new(@parser.blocks)
-    @renderer.result.join("\n\n")
+    puts @renderer.result.join("\n\n")
   end
 end
 

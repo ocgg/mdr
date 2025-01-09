@@ -7,7 +7,7 @@ class Renderer
     else
       {width: 80, word_wrap: true}
     end
-    puts @result = compute!(blocks)
+    @result = compute!(blocks)
   end
 
   private

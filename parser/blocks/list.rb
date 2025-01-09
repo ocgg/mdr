@@ -7,6 +7,11 @@ class List < Block
     parse_text_content
   end
 
+  def render(**opts)
+    @width = opts[:width]
+    process
+  end
+
   private
 
   def find_parent(item, diff)
@@ -17,9 +22,10 @@ class List < Block
     end
   end
 
-  def parse_text_content
-    @content.each do |item|
+  def parse_text_content(items = @content)
+    items.each do |item|
       item[:content] = Text.new(item[:content])
+      parse_text_content(item[:children])
     end
   end
 
@@ -46,5 +52,29 @@ class List < Block
       parent ? parent[:children] << item : items << item
       last_added = item
     end
+  end
+
+  # RENDERING #################################################################
+
+  def find_sign(indent_level)
+    case indent_level
+    when 0 then "•"
+    when 1 then "◦"
+    else "▪"
+    end
+  end
+
+  def process(items = @content, lines = [])
+    items.each do |item|
+      indent_level = item[:indent_level]
+      indents = "  " * indent_level
+      sign = find_sign(indent_level)
+
+      text = item[:content].spans.map(&:content).join
+      lines << "  #{indents}#{sign} #{text}"
+
+      process(item[:children], lines)
+    end
+    lines.join("\n")
   end
 end

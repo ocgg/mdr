@@ -3,8 +3,8 @@ class CodeRenderer
 
   NOSTYLE = "\e[0m"
 
-  COL_SEQ = "\e[38;2;38;38;38;m"
-  BGCOL_SEQ = "\e[48;2;38;38;38;m"
+  COL_SEQ = "\e[38;2;45;45;45;m"
+  BGCOL_SEQ = "\e[48;2;45;45;45;m"
   LANG_SEQ = "\e[38;2;120;120;120;m"
 
   def initialize(width)
