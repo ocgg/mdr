@@ -23,14 +23,7 @@ class Title < Block
     upline = "┌#{"─" * (@width - 2)}┐"
     downline = "└#{"─" * (@width - 2)}┘"
     side = "│"
-    # midlines = to_lines(str[2..], @width - 2).map do |line|
-    #   line = line.center(@width - 2 - 2) # -2 for sides, -2 for spaces
-    #   line = render_txt(line, BOLD)
-    #   "#{side} #{line} #{side}"
-    # end.join("\n")
-    # "#{upline}\n#{midlines}\n#{downline}"
 
-    # TODO: stylize and columnize
     opts = {width: @width - 4, align: :center}
     title = content_to_lines(**opts).map do |line|
       "#{side} #{line} #{side}"
