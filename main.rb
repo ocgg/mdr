@@ -15,4 +15,4 @@ class Main
   end
 end
 
-Main.new "MD_SUMMARY.md"
+Main.new "MD_TEST_mini.md"

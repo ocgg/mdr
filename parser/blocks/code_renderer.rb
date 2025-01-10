@@ -72,7 +72,6 @@ class CodeRenderer
       next add_style_seq_to_line(chunk) if is_seq?(chunk)
 
       chunk.each_char do |char|
-        # If end of line
         if end_of_line?(char)
           finish_line
           reset_line

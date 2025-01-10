@@ -32,33 +32,35 @@ class TextRenderer
     code.gsub!(/(\e\[0m)/, "\1#{bgcol_seq}")
     midline = "#{bgcol_seq}#{code}#{NOSTYLE}"
 
-    # TODO: fill, to line, padding
-
     "#{upline}\n#{midline}\n#{downline}"
   end
 
-  def make_lines!(span)
-    # add style seq
-    span_styles = self.class.seq_from(span.styles)
-    @line += span_styles
+  def make_lines(content)
+    content.spans.each do |span|
+      # add style seq
+      span_styles = self.class.seq_from(span.styles)
+      @line += span_styles
 
-    # TODO/TOFIX: space & styles managment
-    words = span.content.split(" ")
-    add_space_to_line if !line_empty? && fits_in_line?(words[0])
+      # TODO/TOFIX: space & styles managment
+      words = span.content.split(" ")
+      add_space_to_line if !line_empty? && fits_in_line?(words[0])
 
-    @just_resetted = false
-    words.each_with_index do |word, i|
-      if fits_in_line?(word)
-        add_word_to_line(word)
-      else
-        finish_line!
-        reset_line(span_styles, word)
+      @just_resetted = false
+      words.each_with_index do |word, i|
+        if fits_in_line?(word)
+          add_word_to_line(word)
+        else
+          finish_line
+          reset_line(span_styles, word)
+        end
+        add_space_to_line if fits_in_line?(words[i + 1])
       end
-      add_space_to_line if fits_in_line?(words[i + 1])
     end
+    finish_line
+    @lines
   end
 
-  def finish_line!
+  def finish_line
     manage_alignment
     @lines << "#{NOSTYLE}#{@line}#{NOSTYLE}"
     @count = 0

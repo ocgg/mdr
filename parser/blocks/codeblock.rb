@@ -1,12 +1,7 @@
 require_relative "block"
+require_relative "code_renderer"
 
 class Codeblock < Block
-  def format(content)
-    @lang = content.slice(/^```\w*/)[3..]
-    @code = content.lines[1..-2].join.gsub('"', %(\\")).gsub("`", %(\\\\`)).chomp
-    content
-  end
-
   def render(**opts)
     @width = opts[:width]
     lang_opt = @lang.empty? ? "" : "-l #{@lang}"
@@ -18,11 +13,14 @@ class Codeblock < Block
 
   private
 
-  def codeblock_separator(lang = nil)
-    return "▀" * @width if lang.nil?
+  def format(content)
+    @lang = content.slice(/^```\w*/)[3..]
+    @code = content.lines[1..-2].join.gsub('"', %(\\")).gsub("`", %(\\\\`)).chomp
+    content
+  end
 
-    right = lang.empty? ? "" : " #{lang} "
-    left = "▄" * (@width - right.size)
-    "#{left}#{right}"
+  def code_to_lines(code, lang)
+    renderer = CodeRenderer.new(@width)
+    renderer.codeblock(code, lang)
   end
 end

@@ -1,12 +1,14 @@
+class Span
+  attr_reader :content, :styles
+
+  def initialize(content, *styles)
+    @content = content
+    @styles = styles
+  end
+end
+
 class Text
   attr_reader :spans
-
-  def initialize(formatted_string, **opts)
-    @styles = opts[:default_styles] || []
-    @spans = format(formatted_string)
-  end
-
-  private
 
   TEXT_REGEXP = /
     # prefix
@@ -26,14 +28,12 @@ class Text
     .*?
   /x
 
-  class Span
-    attr_reader :content, :styles
-
-    def initialize(content, *styles)
-      @content = content
-      @styles = styles
-    end
+  def initialize(formatted_string, **opts)
+    @styles = opts[:default_styles] || []
+    @spans = format(formatted_string)
   end
+
+  private
 
   def delimiter_to_style(delimiter)
     case delimiter

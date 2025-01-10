@@ -63,7 +63,7 @@ Ceci est un paragraphe
 Ceci est concaténé à la ligne précédente,
   -ça aussi
 - Ceci est la suite de la même liste
-- VOilà
+- Voilà
 
   - Cette sublist aussi ?
     - subsublist?
