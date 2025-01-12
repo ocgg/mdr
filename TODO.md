@@ -36,7 +36,6 @@ Restructurer l'app comme suit:
 - rendu de listes
   - ordonnée
   - checkboxes
-- blockquotes
 - links
 - links variables
 - Gérer les images avec des liens
