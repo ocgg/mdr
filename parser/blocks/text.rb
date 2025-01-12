@@ -33,9 +33,13 @@ class Text
     @spans = formatted_string ? format(formatted_string) : []
   end
 
-  def concatenate!(string)
+  def append_str(string)
     new_spans = spans_from(string)
     @spans += new_spans
+  end
+
+  def prepend_span(span)
+    @spans.unshift(span)
   end
 
   private
