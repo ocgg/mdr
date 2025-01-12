@@ -30,7 +30,12 @@ class Text
 
   def initialize(formatted_string, **opts)
     @styles = opts[:default_styles] || []
-    @spans = format(formatted_string)
+    @spans = formatted_string ? format(formatted_string) : []
+  end
+
+  def concatenate!(string)
+    new_spans = spans_from(string)
+    @spans += new_spans
   end
 
   private

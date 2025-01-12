@@ -20,7 +20,9 @@ Restructurer l'app comme suit:
 
 - Main affiche les lignes selon les options passées en ligne de commande
 
-## TODO VITE
+## REFACTOs
+
+- list (variables d'instances plutôt que tout ce bordel)
 
 ## TODO NEXT
 

@@ -1,1 +1,12 @@
-This in another one, which is deliberately quite long just to see if it prints well according to word-wrap options, or just      in regards to what value is set to $TERM_WIDTH, which is normally set to the terminal width, or to 80 if it is greater than 80. Well I could stop here I think.
+> B This is
+> a blockquote (1 line) E
+>
+> B We can jump lines like this, E
+> > B and add nested
+> > other blockquotes (1 line) E
+> > > B and others E
+> >>> B It goes that way,
+> and once we nested something we can't de-nest
+> >> (it aint a list).
+> > So, from "it goes that way" from here,
+all is in the same line, with 3 levels of nesting E

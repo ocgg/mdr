@@ -3,6 +3,7 @@ require_relative "parser/blocks/separator"
 require_relative "parser/blocks/codeblock"
 require_relative "parser/blocks/table"
 require_relative "parser/blocks/list"
+require_relative "parser/blocks/quote"
 require_relative "parser/blocks/paragraph"
 
 # Parser parse a raw markdown file and translate it into Block objects.
@@ -10,31 +11,24 @@ require_relative "parser/blocks/paragraph"
 class Parser
   attr_reader :blocks
 
-  BLOCK_REGEXS = {
-    title: /^\s{0,3}(\#{1,6} .+)$/,
-    separator: /^\s{0,3}([-*]{3,})$/,
-    table: /^\s{0,3}((?:\|[^|\n]*\n?)+)/,
-    codeblock: /^\s{0,3}(```\w*?\n(?:.|\n)*?```)/,
-    list: /^\s{0,3}((?:\s*- .*(?:\n.+)*(?:\n+|$))+)/,
-    paragraph: /^\s{0,3}(.*)/
-  }
-
   def initialize(raw)
+    @block_regexs = {
+      Title => /^\s{0,3}(\#{1,6} .+)$/,
+      Separator => /^\s{0,3}([-*]{3,})$/,
+      Table => /^\s{0,3}((?:\|[^|\n]*\n?)+)/,
+      Codeblock => /^\s{0,3}(```\w*?\n(?:.|\n)*?```)/,
+      List => /^\s{0,3}((?:- .*(?:\n.+)*(?:\n+|$))+)/,
+      Quote => /^\s{0,3}((?:>\s{,3})+(?:.\n?)*)/,
+      Paragraph => /^\s{0,3}(.*)/
+    }
     @blocks = parse(raw)
   end
 
   private
 
   def parse(raw)
-    types = [
-      Title,
-      Separator,
-      Table,
-      Codeblock,
-      List,
-      Paragraph
-    ]
-    raw.scan(/#{BLOCK_REGEXS.values.join("|")}/).map do |data|
+    types = @block_regexs.keys
+    raw.scan(/#{@block_regexs.values.join("|")}/).map do |data|
       # find index of non-nil data
       id = data.find_index { |match| !match.nil? }
       type = types[id]
