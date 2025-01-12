@@ -2,17 +2,19 @@ require_relative "block"
 require_relative "text"
 
 class Item
-  attr_reader :parent, :children, :indent_level
+  attr_reader :parent, :children, :indent_level, :sign
   attr_accessor :content
 
   def initialize(**args)
+    @tab = args[:tab]
     @parent = args[:parent]
+    @content = args[:content]
     @children = args[:children] || []
     @indent_level = args[:indent_level] || 0
-    @content = args[:content]
+    @sign = find_sign
   end
 
-  def sign
+  def find_sign
     case @indent_level
     when 0 then "•"
     when 1 then "◦"
@@ -20,10 +22,14 @@ class Item
     end
   end
 
-  def indents = "  " * @indent_level
+  def indents = "#{@tab} " * @indent_level
+
+  def indent_width = indents.size
 end
 
 class List < Block
+  TAB = "  "
+
   def render(**opts)
     @width = opts[:width]
     list_to_lines.join("\n")
@@ -36,7 +42,7 @@ class List < Block
   def format(string)
     string = string.squeeze("\n").split("\n")
     first_line = strip_and_squeeze(string.first)[2..]
-    first_item = Item.new(content: first_line)
+    first_item = Item.new(tab: TAB, content: first_line)
     last_added = first_item
 
     string[1..].each_with_object([first_item]) do |line, items|
@@ -52,7 +58,7 @@ class List < Block
 
       parent = indent_level.zero? ? nil : find_parent(last_added, indent_diff)
       line = strip_and_squeeze(line)
-      item = Item.new(indent_level:, parent:, content: line)
+      item = Item.new(tab: TAB, indent_level:, parent:, content: line)
       parent ? parent.children << item : items << item
       last_added = item
     end
@@ -69,12 +75,13 @@ class List < Block
   # RENDERING #################################################################
 
   def item_to_lines(item, lines)
-    width = @width - (4 + (item.indent_level * 2))
-    alines = content_to_lines(content: item.content, width:)
-    alines.each_with_index do |line, i|
+    indent_width = TAB.size + item.indents.size + 2
+    width = @width - indent_width
+    sublines = content_to_lines(content: item.content, width:)
+    sublines.each_with_index do |line, i|
       sign = i.zero? ? item.sign : " "
       prefix = "#{item.indents}#{sign}"
-      lines << "  #{prefix} #{line}"
+      lines << "#{TAB}#{prefix} #{line}"
     end
   end
 
