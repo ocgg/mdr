@@ -48,7 +48,11 @@ class TextRenderer
   private
 
   def fits_in_line?(word)
-    @count + word.size <= @width
+    fits = @count + word.size <= @width
+    if !fits && word.end_with?(" ")
+      fits = @count + word.rstrip.size <= @width
+    end
+    fits
   end
 
   def add_to_line(str)
