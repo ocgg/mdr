@@ -10,7 +10,7 @@
 
 ###### H6: Is it a title ?
 
----
+## Paragraphs
 
 This is a        paragraph.
 
@@ -26,7 +26,7 @@ What if I want to ~~strikethrough~~?
 
 Let's print an `inline code` in this one. And with ``backticks `in it` ?``
 
----
+## Tables
 
 | This is | an actual | Taabeeeeeuuuul |
 |:--------|:---------:|---------------:|
@@ -34,7 +34,7 @@ Let's print an `inline code` in this one. And with ``backticks `in it` ?``
 | just **to be     sure** | *that*          it | `works` |
 | And | it | should |
 
----
+## Code blocks
 
 ```
 {
@@ -54,25 +54,26 @@ console.log(x);
 array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.getElementByID(`is-this-really-my-element-id`).innerText != 'Heeeeell yeah') ? console.log("Yeah, yeah, yeah") : alert("Whoever uses alerts anyway ?") })
 ```
 
+## Lists
+
+- I ain't got:
+  - no home, no shoes, no money
+  - no friends, no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
+  - no love
+- Then what have I got? Why am I alive anyway?
+- What have I got that nobody can take away ?
+- I got:
+  - my hair, my head, my brains
+  - my ears, my eyes, my nose, my mouth
+    - I got my smile
+    - ...
+
+## Quote blocks
+
+> It is said, that one day, at one time, a man (and we actually don't know who he really was), **woke up this morning** and said :
+> > "*See, see rider*"
+> >
+> > "*See what you've done*"
+> > ...
+
 ---
-
-Ceci est un paragraphe
-
-- Ceci est une liste
-  -Ceci est concaténé à     la ligne précédente
-Ceci est concaténé à la ligne précédente,
-  -ça aussi
-- Ceci est la suite de la même liste
-- Voilà
-
-  - Cette sublist aussi ?
-    - subsublist?
-      - subsubsublist?
-        - subsubsublist? *blala* **blalaala**  bla     bla **_blala blalaala_** bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla blala blalaala bla
-
-- La même liste
-
-blabla
-
-   - mais ça c'est juste une nouvelle liste
-
