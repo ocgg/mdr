@@ -31,9 +31,9 @@ class Parser
     raw.scan(/#{@block_regexs.values.join("|")}/).map do |data|
       # find index of non-nil data
       id = data.find_index { |match| !match.nil? }
-      type = types[id]
+      block_class = types[id]
       content = data[id]
-      type.new(content)
+      block_class.new(content)
     end
   end
 end
