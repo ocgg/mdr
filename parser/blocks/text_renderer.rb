@@ -4,7 +4,9 @@ class TextRenderer
     dim: 2,
     italic: 3,
     underline: 4,
-    strike: 9
+    strike: 9,
+    # CUSTOM
+    quote: [38, 2, 110, 110, 110]
   }
   NOSTYLE = "\e[0m"
 
@@ -81,6 +83,10 @@ class TextRenderer
 
   # Methods that dont need any instance variable are set as class methods
   class << self
+    def stylized_string(string, *stylenames)
+      "#{NOSTYLE}#{seq_from(stylenames)}#{string}#{NOSTYLE}"
+    end
+
     def spans_to_string(spans)
       spans.map do |span|
         seq = seq_from(span.styles)
@@ -91,7 +97,7 @@ class TextRenderer
     # Returns the corresponding escape sequence from styles names
     def seq_from(stylenames)
       return "" if stylenames.empty?
-      stylenames.map! { |name| STYLES[name] }
+      stylenames.map! { |name| STYLES[name] }.flatten
       "\e[#{stylenames.join(";")}m"
     end
   end
