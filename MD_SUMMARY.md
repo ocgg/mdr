@@ -56,13 +56,14 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 
 ## Lists
 
-- I ain't got:
-  - no home, no shoes, no money
+- **I ain't got**:
+  - no home, ~no shoes~, no money
   - no friends, no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
-  - no love
-- Then what have I got? Why am I alive anyway?
-- What have I got that nobody can take away ?
-- I got:
+  - ~no love~
+- Then *what have I got*? *Why am I alive anyway*?
+- What have I got that **nobody can take away** ?
+
+- **I got:**
   - my hair, my head, my brains
   - my ears, my eyes, my nose, my mouth
     - I got my smile
@@ -70,10 +71,12 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 
 ## Quote blocks
 
-> It is said, that one day, at one time, a man (and we actually don't know who he really was), **woke up this morning** and said :
-> > "*See, see rider*"
+> My home is on the water, I don't like no land at all / I'd rather be dead than stay here and be your dog
+> 
+> I love you babe, but I hate your dirty ways / When I'm leaving this town I'm going away to stay
+> > *See, see rider*
 > >
-> > "*See what you've done*"
+> > *See what you've done*
 > > ...
 
 ---
