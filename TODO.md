@@ -22,8 +22,6 @@ Restructurer l'app comme suit:
 
 ## TODO VITE
 
-- cf bugfixes
-
 ## TODO NEXT
 
 - H1 & h2 peuvent être sur 2 lignes avec /title\n=+/ ou /title\n-+/
@@ -44,10 +42,8 @@ Restructurer l'app comme suit:
 
 ## BUGFIXES
 
-- inline styles: content_to_line à revoir & corriger
-
 ## TODO DANS LONGTEMPS
 
 - inline style: checker ça: "**,,,**c. s**,,,** censé rendre ",,,c. s,,," en gras
 - TESTS: ça devrait être facile à écrire.
-- afficher les longues notes sur 2 colonnes si termwidth > 160
+- option pour afficher les longues notes sur 2 colonnes si termwidth > 160

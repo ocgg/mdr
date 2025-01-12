@@ -1,6 +1,4 @@
 class CodeRenderer
-  attr_reader :lines
-
   NOSTYLE = "\e[0m"
 
   COL_SEQ = "\e[38;2;45;45;45;m"
