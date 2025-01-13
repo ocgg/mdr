@@ -1,3 +1,5 @@
+require_relative "text"
+
 class TextRenderer
   STYLES = {
     bold: 1,
@@ -6,6 +8,8 @@ class TextRenderer
     underline: 4,
     strike: 9,
     # CUSTOM
+    inline_code: [48, 5, 237, 38, 5, 251],
+    inline_code_around: [38, 5, 237],
     quote: [38, 5, 247]
   }
   NOSTYLE = "\e[0m"
@@ -42,6 +46,7 @@ class TextRenderer
       @line += NOSTYLE if span.styles.any?
     end
     finish_line
+
     @lines
   end
 
@@ -101,8 +106,8 @@ class TextRenderer
     # Returns the corresponding escape sequence from styles names
     def seq_from(stylenames)
       return "" if stylenames.empty?
-      stylenames.map! { |name| STYLES[name] }.flatten
-      "\e[#{stylenames.join(";")}m"
+      stylecodes = stylenames.map { |name| STYLES[name] }.flatten
+      "\e[#{stylecodes.join(";")}m"
     end
   end
 end

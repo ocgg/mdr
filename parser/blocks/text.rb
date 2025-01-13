@@ -14,7 +14,7 @@ class Text
     # prefix
     (?<=(?<beforebegin>\W))?
     # opening tag
-    (?<open_tag>\*\*\*|___|\*\*|__|\*|_|``|``|~~|~)
+    (?<open_tag>\*\*\*|___|\*\*|__|\*|_|``|`|~~|~)
     # content
     (?<content>
       (?(<beforebegin>).|\w)
@@ -54,11 +54,19 @@ class Text
   end
 
   def spans_from(string)
+    return @results if string.empty?
+
     md = string.match(TEXT_REGEXP)
-    unless md
-      unless string.empty?
-        @results << Span.new(string, *@styles)
-      end
+
+    # TODO: this logic should be in the TextRenderer, not at format stage.
+    # let's keep it like this while we use tty-tables for table rendering
+    if @styles.include?(:inline_code)
+      @results << Span.new("🭒", :inline_code_around)
+      @results << Span.new(string, *@styles)
+      @results << Span.new("🭌", :inline_code_around)
+      return @results
+    elsif md.nil? || @styles.include?(:inline_code)
+      @results << Span.new(string, *@styles)
       return @results
     end
 
