@@ -6,7 +6,7 @@ class TextRenderer
     underline: 4,
     strike: 9,
     # CUSTOM
-    quote: [38, 2, 110, 110, 110]
+    quote: [38, 5, 247]
   }
   NOSTYLE = "\e[0m"
 
