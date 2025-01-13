@@ -22,7 +22,7 @@ Restructurer l'app comme suit:
 
 ## REFACTOs
 
-- list (variables d'instances plutôt que tout ce bordel)
+- Quand y'aura plus tty-tables: la logique de style :inline_code à mettre dans TextRenderer plutôt que Text (cf text.rb)
 
 ## TODO NEXT
 
