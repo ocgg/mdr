@@ -24,7 +24,7 @@ Can we combine **_both of that_?** Absolutely.    The same, with ***three stars*
 
 What if I want to ~~strikethrough~~?
 
-Let's print an `inline code` in this one. And with ``backticks `in it` ?``
+Let's print an `inline code` in this one. And with ``backticks `in it`?``, `and with newlines in the middle` ?
 
 ## Tables
 
