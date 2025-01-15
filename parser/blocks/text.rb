@@ -2,7 +2,7 @@ class Span
   attr_reader :content, :styles
 
   def initialize(string, *styles)
-    @content = string
+    @content = string.squeeze(" ")
     @styles = styles
   end
 
@@ -61,6 +61,7 @@ class Text
 
   def format(string)
     @spans = []
+    string = string.gsub(/([^\\])\n/, '\1 ')
     spans_from(string)
   end
 

@@ -10,8 +10,6 @@ class Paragraph < Block
   private
 
   def format(string)
-    string = strip_and_squeeze(string)
-    string = string.gsub(/[^\\]\n/, " ")
     Text.new(string)
   end
 end
