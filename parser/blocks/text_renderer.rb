@@ -20,7 +20,6 @@ class TextRenderer
     @align = align
     @lines = []
     @line = ""
-    @just_resetted = true
     @count = 0
   end
 
@@ -30,8 +29,6 @@ class TextRenderer
   # exceed @width characters (escapes sequences are not taken into account).
   def make_lines(text)
     text.spans.each do |span|
-      @just_resetted = false
-
       if span.link?
         @line += span.link_start_seq
         span.content.spans.each do |link_span|
@@ -52,13 +49,30 @@ class TextRenderer
     @line += span_styles_seq
     tokens = span.content.split(/\b/)
     tokens.each do |token|
-      if !fits_in_line?(token) || token == "\n"
-        finish_line(span_styles_seq, token)
+      if token.match?("\\\n")
+        manage_wanted_newlines(token, span_styles_seq)
+      elsif !fits_in_line?(token)
+        finish_line(span_styles_seq)
+        add_to_line(token.lstrip)
       else
         add_to_line(token)
       end
     end
     @line += NOSTYLE if span.styles.any?
+  end
+
+  def manage_wanted_newlines(token, span_styles_seq)
+    split = token.split(/(\\\n)/)
+    fresh_newline = false
+
+    split.each_with_index do |t, i|
+      next if t.empty?
+      if t == "\\\n"
+        finish_line(span_styles_seq)
+        next fresh_newline = true
+      end
+      add_to_line(fresh_newline ? t.lstrip : t.rstrip)
+    end
   end
 
   def fits_in_line?(token)
@@ -75,12 +89,11 @@ class TextRenderer
   end
 
   def finish_line(start_seq = nil, first_word = nil)
+    @line.rstrip!
     manage_alignment
-    @line.rstrip! unless @align == :center
     @lines << "#{NOSTYLE}#{@line}#{NOSTYLE}"
     @line = start_seq || ""
     @count = 0
-    first_word ? add_to_line(first_word.lstrip) : @just_resetted = true
     @lines
   end
 
