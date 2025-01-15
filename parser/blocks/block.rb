@@ -19,10 +19,6 @@ class Block
     str.strip.squeeze(" ").squeeze("\n")
   end
 
-  # def split_with_wanted_newlines(string)
-  #   string.split(/[^\\]\n/)
-  # end
-
   # RENDERING #################################################################
 
   def spans_to_string(spans)
