@@ -40,25 +40,22 @@ class List < Block
   # FORMATING #################################################################
 
   def format(string)
-    string = string.squeeze("\n").split("\n")
-    first_line = strip_and_squeeze(string.first)[2..]
-    first_item = Item.new(tab: TAB, content: first_line)
-    last_added = first_item
+    string_items = string.split(/((?:.(?:\\\n)?)*?)\n/).reject(&:empty?)
 
-    string[1..].each_with_object([first_item]) do |line, items|
+    last_added = nil
+    string_items.each_with_object([]) do |line, items|
       left_part = line.slice!(/^\s*- /)
 
       unless left_part
-        last_added.content += " #{strip_and_squeeze(line)}"
+        last_added.content.append_str(" #{line}")
         next items
       end
 
       indent_level = (left_part.size - 2) / 2
-      indent_diff = indent_level - last_added.indent_level
+      indent_diff = indent_level - last_added.indent_level if last_added
 
       parent = indent_level.zero? ? nil : find_parent(last_added, indent_diff)
-      line = strip_and_squeeze(line)
-      item = Item.new(tab: TAB, indent_level:, parent:, content: line)
+      item = Item.new(tab: TAB, indent_level:, parent:, content: Text.new(line))
       parent ? parent.children << item : items << item
       last_added = item
     end
@@ -87,7 +84,6 @@ class List < Block
 
   def list_to_lines(items = @content, lines = [])
     items.each do |item|
-      item.content = Text.new(item.content)
       item_to_lines(item, lines)
       list_to_lines(item.children, lines)
     end
