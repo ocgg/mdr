@@ -76,7 +76,8 @@ class TextRenderer
 
   def finish_line(start_seq = nil, first_word = nil)
     manage_alignment
-    @lines << "#{NOSTYLE}#{@line.rstrip}#{NOSTYLE}"
+    @line.rstrip! unless @align == :center
+    @lines << "#{NOSTYLE}#{@line}#{NOSTYLE}"
     @line = start_seq || ""
     @count = 0
     first_word ? add_to_line(first_word.lstrip) : @just_resetted = true
