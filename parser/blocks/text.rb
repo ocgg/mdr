@@ -60,7 +60,7 @@ class Text
   private
 
   def format(string)
-    @results = []
+    @spans = []
     string = string.strip.tr("\n", " ").squeeze(" ")
     spans_from(string)
   end
@@ -77,16 +77,16 @@ class Text
     end
   end
 
-  # Must return @results
+  # Must return @spans
   def inline_code_decorations(string)
-    @results << Span.new("🭒", :inline_code_around)
-    @results << Span.new(string, *@styles)
-    @results << Span.new("🭌", :inline_code_around)
+    @spans << Span.new("🭒", :inline_code_around)
+    @spans << Span.new(string, *@styles)
+    @spans << Span.new("🭌", :inline_code_around)
   end
 
-  # Must return @results
+  # Must return @spans
   def add_span(string)
-    @results << Span.new(string, *@styles)
+    @spans << Span.new(string, *@styles)
   end
 
   def spans_from_match_content(match_data)
@@ -99,7 +99,7 @@ class Text
     raw = match_data[0]
     text = raw.slice(/\[(.*?)\]/)[1..-2]
     url = raw.slice(/\((.*?)\)/)[1..-2]
-    @results << Link.new(text, url, *@styles + [:link])
+    @spans << Link.new(text, url, *@styles + [:link])
   end
 
   def process_inline_styles(string, match_data, before_match, after_match)
@@ -119,7 +119,7 @@ class Text
   end
 
   def spans_from(string)
-    return @results if string.nil? || string.empty?
+    return @spans if string.nil? || string.empty?
     return inline_code_decorations(string) if @styles.include?(:inline_code)
 
     match_data = string.match(TEXT_REGEX)
