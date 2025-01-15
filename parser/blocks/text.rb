@@ -44,7 +44,7 @@ class Text
     )
   /x
 
-  LINK_REGEX = /(?<link>\[.*?\]\(.*?\))/
+  LINK_REGEX = /(?<link>\[(?:.(?:\\\n)?)*?\]\(.*?\))/
 
   TEXT_REGEX = /#{INLINE_STYLE_REGEX}|#{LINK_REGEX}/
 
@@ -97,7 +97,7 @@ class Text
 
   def add_link_span(match_data)
     raw = match_data[0]
-    text = raw.slice(/\[(.*?)\]/)[1..-2]
+    text = raw.slice(/\[((?:.(?:\\\n)?)*?)\]/)[1..-2]
     url = raw.slice(/\((.*?)\)/)[1..-2]
     @spans << Link.new(text, url, *@styles + [:link])
   end
