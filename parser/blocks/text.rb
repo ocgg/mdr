@@ -1,16 +1,31 @@
 class Span
   attr_reader :content, :styles
 
-  def initialize(content, *styles)
-    @content = content
+  def initialize(string, *styles)
+    @content = string
     @styles = styles
   end
+
+  def link? = !!@url
+end
+
+class Link < Span
+  def initialize(content, url, *styles)
+    @content = Text.new(content, default_styles: styles)
+    @styles = styles
+    @url = url
+  end
+
+  def link_start_seq = "\e]8;;#{@url}\e\\"
+
+  def link_end_seq = "\e]8;;\e\\"
 end
 
 class Text
   attr_reader :spans
 
   INLINE_STYLE_REGEX = /
+    (?:
     # prefix
     (?<=(?<beforebegin>\W))?
     # opening tag
@@ -26,21 +41,29 @@ class Text
     # suffix
     (?=(?(<beforeend>).|\W)|$)
     .*?
+    )
   /x
-  LINK_REGEX = /(\[.*\]\(.*\))/
 
-  def initialize(string, **opts)
-    @styles = opts[:default_styles] || []
+  LINK_REGEX = /(?<link>\[.*?\]\(.*?\))/
+
+  TEXT_REGEX = /#{INLINE_STYLE_REGEX}|#{LINK_REGEX}/
+
+  def initialize(string, default_styles: [])
+    @styles = default_styles
     @spans = string ? format(string) : []
   end
 
   def append_str(string) = spans_from(string)
 
-  def prepend_span(span)
-    @spans.unshift(span)
-  end
+  def prepend_span(span) = @spans.unshift(span)
 
   private
+
+  def format(string)
+    @results = []
+    string = string.strip.tr("\n", " ").squeeze(" ")
+    spans_from(string)
+  end
 
   def delimiter_to_style(delimiter)
     case delimiter
@@ -49,8 +72,8 @@ class Text
     when "*", "_" then [:italic]
     when "~~", "~" then [:strike]
     when "``", "`" then [:inline_code]
-    # Should never reach this line
-    else raise "Unknown delimiter '#{delimiter}'"
+    else
+      raise "Unknown delimiter '#{delimiter}'"
     end
   end
 
@@ -72,25 +95,37 @@ class Text
     @styles.pop # keep this here
   end
 
-  def spans_from(string)
-    return @results if string.empty?
-    return inline_code_decorations(string) if @styles.include?(:inline_code)
+  def add_link_span(match_data)
+    raw = match_data[0]
+    text = raw.slice(/\[(.*?)\]/)[1..-2]
+    url = raw.slice(/\((.*?)\)/)[1..-2]
+    @results << Link.new(text, url, *@styles + [:link])
+  end
 
-    match_data = string.match(INLINE_STYLE_REGEX)
-    return add_span(string) if match_data.nil?
+  def process_inline_styles(string, match_data, before_match, after_match)
+    # Before match: there was no specific style, just add the span
+    add_span(before_match) unless before_match&.empty?
 
-    # These are global variables provided by .match
-    before_match = $`
-    after_match = $'
+    # Actual match content
+    if match_data[:link]
+      add_link_span(match_data)
+    else
+      # Check nested styles in match's content
+      spans_from_match_content(match_data)
+    end
 
-    add_span(before_match) unless before_match.empty?
-    spans_from_match_content(match_data)
+    # After match: process the rest of the string
     spans_from(after_match)
   end
 
-  def format(string)
-    @results = []
-    string = string.strip.tr("\n", " ").squeeze(" ")
-    spans_from(string)
+  def spans_from(string)
+    return @results if string.nil? || string.empty?
+    return inline_code_decorations(string) if @styles.include?(:inline_code)
+
+    match_data = string.match(TEXT_REGEX)
+    return add_span(string) if match_data.nil?
+
+    # $` and $' are provided by .match
+    process_inline_styles(string, match_data, $`, $')
   end
 end

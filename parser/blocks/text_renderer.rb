@@ -10,7 +10,8 @@ class TextRenderer
     # CUSTOM
     inline_code: [48, 5, 237, 38, 5, 251],
     inline_code_around: [38, 5, 237],
-    quote: [38, 5, 247]
+    quote: [38, 5, 247],
+    link: [4, 38, 2, 120, 160, 230]
   }
   NOSTYLE = "\e[0m"
 
@@ -31,51 +32,55 @@ class TextRenderer
     text.spans.each do |span|
       @just_resetted = false
 
-      span_styles_seq = self.class.seq_from(span.styles)
-      @line += span_styles_seq
-
-      words_and_spaces = span.content.split(/\b/)
-      words_and_spaces.each do |word_or_space|
-        if fits_in_line?(word_or_space)
-          add_to_line(word_or_space)
-        else
-          finish_line
-          reset_line(span_styles_seq, word_or_space)
+      if span.link?
+        @line += span.link_start_seq
+        span.content.spans.each do |link_span|
+          lines_from_span(link_span)
         end
+        @line += span.link_end_seq if span.link?
+      else
+        lines_from_span(span)
       end
-      @line += NOSTYLE if span.styles.any?
     end
     finish_line
-
-    @lines
   end
 
   private
 
-  def fits_in_line?(word)
-    fits = @count + word.size <= @width
-    if !fits && word.end_with?(" ")
-      fits = @count + word.rstrip.size <= @width
+  def lines_from_span(span)
+    span_styles_seq = TextRenderer.seq_from(span.styles)
+    @line += span_styles_seq
+    tokens = span.content.split(/\b/)
+    tokens.each do |token|
+      if fits_in_line?(token)
+        add_to_line(token)
+      else
+        finish_line(span_styles_seq, token)
+      end
+    end
+    @line += NOSTYLE if span.styles.any?
+  end
+
+  def fits_in_line?(token)
+    fits = @count + token.size <= @width
+    if !fits && token.end_with?(" ")
+      fits = @count + token.rstrip.size <= @width
     end
     fits
   end
 
-  def add_to_line(str)
-    @line += str
-    @count += str.size
+  def add_to_line(token)
+    @line += token
+    @count += token.size
   end
 
-  def finish_line
+  def finish_line(start_seq = nil, first_word = nil)
     manage_alignment
-    @lines << "#{NOSTYLE}#{@line}#{NOSTYLE}"
-    @count = 0
-    @line = ""
-  end
-
-  def reset_line(start_seq = nil, first_word = nil)
+    @lines << "#{NOSTYLE}#{@line.rstrip}#{NOSTYLE}"
     @line = start_seq || ""
-    add_to_line(first_word.lstrip)
-    @just_resetted = true unless first_word
+    @count = 0
+    first_word ? add_to_line(first_word.lstrip) : @just_resetted = true
+    @lines
   end
 
   def manage_alignment
