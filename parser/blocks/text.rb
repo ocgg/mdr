@@ -10,7 +10,7 @@ end
 class Text
   attr_reader :spans
 
-  TEXT_REGEXP = /
+  INLINE_STYLE_REGEX = /
     # prefix
     (?<=(?<beforebegin>\W))?
     # opening tag
@@ -27,6 +27,7 @@ class Text
     (?=(?(<beforeend>).|\W)|$)
     .*?
   /x
+  LINK_REGEX = /(\[.*\]\(.*\))/
 
   def initialize(string, **opts)
     @styles = opts[:default_styles] || []
@@ -53,36 +54,38 @@ class Text
     end
   end
 
+  # Must return @results
+  def inline_code_decorations(string)
+    @results << Span.new("🭒", :inline_code_around)
+    @results << Span.new(string, *@styles)
+    @results << Span.new("🭌", :inline_code_around)
+  end
+
+  # Must return @results
+  def add_span(string)
+    @results << Span.new(string, *@styles)
+  end
+
+  def spans_from_match_content(match_data)
+    @styles += delimiter_to_style(match_data[:open_tag])
+    spans_from(match_data[:content])
+    @styles.pop # keep this here
+  end
+
   def spans_from(string)
     return @results if string.empty?
+    return inline_code_decorations(string) if @styles.include?(:inline_code)
 
-    md = string.match(TEXT_REGEXP)
+    match_data = string.match(INLINE_STYLE_REGEX)
+    return add_span(string) if match_data.nil?
 
-    # TODO: this logic should be in the TextRenderer, not at format stage.
-    # let's keep it like this while we use tty-tables for table rendering
-    if @styles.include?(:inline_code)
-      @results << Span.new("🭒", :inline_code_around)
-      @results << Span.new(string, *@styles)
-      @results << Span.new("🭌", :inline_code_around)
-      return @results
-    elsif md.nil? || @styles.include?(:inline_code)
-      @results << Span.new(string, *@styles)
-      return @results
-    end
+    # These are global variables provided by .match
+    before_match = $`
+    after_match = $'
 
-    beforematch = $`
-    @results << Span.new(beforematch, *@styles) unless beforematch.empty?
-
-    # Get spans from inner match content
-    content = md[:content]
-    delimiter = md[:open_tag]
-    @styles += delimiter_to_style(delimiter)
-    spans_from(content)
-    @styles.pop # keep this here
-
-    # Then from the rest of the string
-    aftermatch = $'
-    spans_from(aftermatch)
+    add_span(before_match) unless before_match.empty?
+    spans_from_match_content(match_data)
+    spans_from(after_match)
   end
 
   def format(string)
