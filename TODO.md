@@ -22,18 +22,17 @@ Restructurer l'app comme suit:
 
 ## REFACTOs
 
-- Quand y'aura plus tty-tables: la logique de style :inline_code à mettre dans TextRenderer plutôt que Text (cf text.rb)
+- list
+- tous les (?:.(?:\\\n)?)*
 
 ## TODO NEXT
 
 - mettre dans une constante globale: WIDTH
-- newlines (avec \ ou "  " voire `<br>`)
 - H1 & h2 peuvent être sur 2 lignes avec /title\n=+/ ou /title\n-+/
+- newlines (avec \ ou "  " voire `<br>`): encore table & title (avec ci-dessus)
 - \&nbsp; à la place du dernier espace avant le dernier char d'un titre
-- inline codeblock avec backticks dedans: ``inline_code(`with backticks`);``
 - meilleurs tableaux
 - ignorer les commentaires (tag HTML)
-- Futur: sur 2 colonnes, les links risquent de poser problème
 
 ### MD features
 
@@ -49,6 +48,7 @@ Restructurer l'app comme suit:
 
 ## TODO DANS LONGTEMPS
 
+- sur 2 colonnes, les links risquent de poser problème
 - inline style: checker ça: "**,,,**c. s**,,,** censé rendre ",,,c. s,,," en gras
 - TESTS: ça devrait être facile à écrire.
 - option pour afficher les longues notes sur 2 colonnes si termwidth > 160
