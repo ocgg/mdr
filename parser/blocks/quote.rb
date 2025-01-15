@@ -33,7 +33,7 @@ class Quote < Block
     @nest_level = 1
     @lines = []
 
-    content = strip_and_squeeze(content).split("\n")
+    content = content.split(/((?:.(?:\\\n)?)*?)\n/).reject(&:empty?)
     content.each do |line|
       left_part = line.slice!(/^( *>)+ ?/)
       next concatenate_with_last(line) unless left_part
