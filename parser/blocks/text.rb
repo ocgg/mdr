@@ -33,7 +33,7 @@ class Text
     # content
     (?<content>
       (?(<beforebegin>).|\w)
-      .*?
+      (?:.\n?)*?
       (?<beforeend>\w)?
     )
     # closing tag
@@ -61,7 +61,6 @@ class Text
 
   def format(string)
     @spans = []
-    string = string.strip.tr("\n", " ").squeeze(" ")
     spans_from(string)
   end
 

@@ -52,10 +52,10 @@ class TextRenderer
     @line += span_styles_seq
     tokens = span.content.split(/\b/)
     tokens.each do |token|
-      if fits_in_line?(token)
-        add_to_line(token)
-      else
+      if !fits_in_line?(token) || token == "\n"
         finish_line(span_styles_seq, token)
+      else
+        add_to_line(token)
       end
     end
     @line += NOSTYLE if span.styles.any?

@@ -19,7 +19,7 @@ class Parser
       Codeblock => /^\s{0,3}(```\w*?\n(?:.|\n)*?```)/,
       List => /^\s{0,3}((?:- .*(?:\n.+)*(?:\n|$))+)/,
       Quote => /^\s{0,3}((?:>\s{,3})+(?:.\n?)*)/,
-      Paragraph => /^\s{0,3}(.*)/
+      Paragraph => /^\s{0,3}((?:.\n?)*)/
     }
     @blocks = parse(raw)
   end

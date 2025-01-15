@@ -9,8 +9,9 @@ class Paragraph < Block
 
   private
 
-  def format(content)
-    content = content.strip.tr("\n", " ").squeeze(" ")
-    Text.new(content)
+  def format(string)
+    string = strip_and_squeeze(string)
+    string = string.gsub(/[^\\]\n/, " ").gsub("\\\n", "\n")
+    Text.new(string)
   end
 end
