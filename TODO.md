@@ -26,20 +26,24 @@ Restructurer l'app comme suit:
 
 ## TODO NEXT
 
+- mettre dans une constante globale: WIDTH
+- newlines (avec \ ou "  " voire `<br>`)
 - H1 & h2 peuvent être sur 2 lignes avec /title\n=+/ ou /title\n-+/
 - \&nbsp; à la place du dernier espace avant le dernier char d'un titre
 - inline codeblock avec backticks dedans: ``inline_code(`with backticks`);``
 - meilleurs tableaux
+- ignorer les commentaires (tag HTML)
+- Futur: sur 2 colonnes, les links risquent de poser problème
 
 ### MD features
 
 - rendu de listes
   - ordonnée
   - checkboxes
-- links
 - links variables
 - Gérer les images avec des liens
 - liens vers fichiers ?
+- footnotes
 
 ## BUGFIXES
 
