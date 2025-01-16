@@ -22,18 +22,18 @@ Restructurer l'app comme suit:
 
 ## REFACTOs
 
+- text: utiliser String:partition au lieu de regex
 - list
 - tous les (?:.(?:\\\n)?)*
 
 ## TODO NEXT
 
 - mettre dans une constante globale: WIDTH
-- H1 & h2 peuvent être sur 2 lignes avec /title\n=+/ ou /title\n-+/
-- newlines (avec \ ou "  " voire `<br>`): encore table & title (avec ci-dessus)
-- \&nbsp; à la place du dernier espace avant le dernier char d'un titre
-  - Et aussi autour du inline code
-- meilleurs tableaux
-- ignorer les commentaires (tag HTML)
+- meilleurs tableaux + wanted newlines
+- Retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration
+- ignorer les commentaires `<!-- -->`
+- doublons de séquence de NOSTYLE
+- wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
 
 ### MD features
 
@@ -41,7 +41,7 @@ Restructurer l'app comme suit:
   - ordonnée
   - checkboxes
 - links variables
-- Gérer les images avec des liens
+- images (si supporté, sinon lien)
 - liens vers fichiers ?
 - footnotes
 
@@ -49,7 +49,8 @@ Restructurer l'app comme suit:
 
 ## TODO DANS LONGTEMPS
 
+- Checker si `bat` disponible (sinon utiliser l'autre truc natif, là)
 - sur 2 colonnes, les links risquent de poser problème
-- inline style: checker ça: "**,,,**c. s**,,,** censé rendre ",,,c. s,,," en gras
 - TESTS: ça devrait être facile à écrire.
 - option pour afficher les longues notes sur 2 colonnes si termwidth > 160
+- inline style: checker ça: "**,,,**c. s**,,,** censé rendre ",,,c. s,,," en gras
