@@ -1,8 +1,8 @@
-# H1: Main Title
+# h1: main title
 
-## H2: Big Title
+## h2: big title
 
-### H3: Less big title
+### h3: less big title
 
 #### H4: Subtitle or something
 
