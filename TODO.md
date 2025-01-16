@@ -31,6 +31,7 @@ Restructurer l'app comme suit:
 - H1 & h2 peuvent être sur 2 lignes avec /title\n=+/ ou /title\n-+/
 - newlines (avec \ ou "  " voire `<br>`): encore table & title (avec ci-dessus)
 - \&nbsp; à la place du dernier espace avant le dernier char d'un titre
+  - Et aussi autour du inline code
 - meilleurs tableaux
 - ignorer les commentaires (tag HTML)
 
