@@ -16,8 +16,15 @@ class Title < Block
   private
 
   def format(string)
-    sharps = string.slice!(/^#* /).size - 1
-    @level = sharps
+    if string.match?(/^ *#/)
+      sharps = string.slice!(/^#* /).size - 1
+      @level = sharps
+    else
+      sign = string.rstrip[-1]
+      @level = (sign == "=") ? 1 : 2
+      lines = string.split(/((?:.(?:\\\n)?)*?)\n/).reject(&:empty?)
+      string = lines[..-2].join
+    end
     opts = case @level
     when 1 then {default_styles: [:bold]}
     when 2 then {default_styles: [:bold]}
