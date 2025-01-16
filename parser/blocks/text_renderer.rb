@@ -34,7 +34,7 @@ class TextRenderer
         span.content.spans.each do |link_span|
           lines_from_span(link_span)
         end
-        @line += span.link_end_seq if span.link?
+        @line += span.link_end_seq
       else
         lines_from_span(span)
       end
@@ -62,11 +62,10 @@ class TextRenderer
   end
 
   def manage_wanted_newlines(token, span_styles_seq)
-    split = token.split(/(\\\n)/)
+    tokens = token.split(/(\\\n)/).reject(&:empty?)
     fresh_newline = false
 
-    split.each_with_index do |t, i|
-      next if t.empty?
+    tokens.each_with_index do |t, i|
       if t == "\\\n"
         finish_line(span_styles_seq)
         next fresh_newline = true
