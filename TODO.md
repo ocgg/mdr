@@ -32,7 +32,6 @@ Restructurer l'app comme suit:
 - meilleurs tableaux + wanted newlines
 - Retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration
 - ignorer les commentaires `<!-- -->`
-- doublons de séquence de NOSTYLE
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
 
 ### MD features
@@ -44,8 +43,11 @@ Restructurer l'app comme suit:
 - images (si supporté, sinon lien)
 - liens vers fichiers ?
 - footnotes
+- contenu caché à dérouler (afficher mais comment ?)
 
 ## BUGFIXES
+
+- doublons de séquence de NOSTYLE
 
 ## TODO DANS LONGTEMPS
 
