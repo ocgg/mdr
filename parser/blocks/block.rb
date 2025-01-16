@@ -13,12 +13,6 @@ class Block
 
   private
 
-  # FORMATING #################################################################
-
-  def strip_and_squeeze(str)
-    str.strip.squeeze(" ").squeeze("\n")
-  end
-
   # RENDERING #################################################################
 
   def spans_to_string(spans)

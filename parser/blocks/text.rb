@@ -2,7 +2,12 @@ class Span
   attr_reader :content, :styles
 
   def initialize(string, *styles)
-    @content = string.squeeze(" ")
+    string = if styles.include?(:inline_code)
+      string.tr("\n", " ")
+    else
+      string.gsub(/([^\\])\n/, '\1 ').squeeze(" ")
+    end
+    @content = string
     @styles = styles
   end
 
@@ -61,7 +66,6 @@ class Text
 
   def format(string)
     @spans = []
-    string = string.gsub(/([^\\])\n/, '\1 ')
     spans_from(string)
   end
 
@@ -97,7 +101,7 @@ class Text
 
   def add_link_span(match_data)
     raw = match_data[0]
-    text = raw.slice(/\[((?:.(?:\\\n)?)*?)\]/)[1..-2]
+    text = raw.slice(/\[(?:.(?:\\\n)?)*?\]/)[1..-2]
     url = raw.slice(/\((.*?)\)/)[1..-2]
     @spans << Link.new(text, url, *@styles + [:link])
   end
