@@ -62,11 +62,11 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 ## Lists
 
 - **I ain't got**:
-  - no home,\
+  * no home,\
   ~no shoes~,\
   no money
-  - no friends,    no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
-  - ~no love~
+  * no friends,    no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
+  * ~no love~
 - Then *what have I got*?    *Why am I alive anyway*?
 - What have I got that **nobody can take away** ?
 
