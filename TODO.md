@@ -22,8 +22,7 @@ Restructurer l'app comme suit:
 
 ## REFACTOs
 
-- text: utiliser String:partition au lieu de regex
-- list
+- text: utiliser String:partition au lieu de .match (lisibilité)
 - tous les (?:.(?:\\\n)?)*
 
 ## TODO NEXT
@@ -33,11 +32,11 @@ Restructurer l'app comme suit:
 - Retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration
 - ignorer les commentaires `<!-- -->`
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
+- ord list: aligner les chiffres à droite
 
 ### MD features
 
 - rendu de listes
-  - ordonnée
   - checkboxes
 - links variables
 - images (si supporté, sinon lien)
