@@ -61,20 +61,34 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 
 ## Lists
 
-- **I ain't got**:
-  * no home,\
-  ~no shoes~,\
-  no money
-  * no friends,    no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
-  * ~no love~
-- Then *what have I got*?    *Why am I alive anyway*?
-- What have I got that **nobody can take away** ?
+### Unordered
 
-- **I got:**
+- I ain't got:
+  * no home, ~no shoes~, no money
+  * no friends, no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
+  * ~no love~
+- Then *what have I got* that **nobody can take away** ?
+
+- I got:
   - my hair,    my head, my brains
   - my ears, my eyes, my nose, my mouth
     - I got my smile
     - ...
+
+### Ordered
+
+1. **Major scale modes**
+  1. Ionian
+  2. Dorian
+  2. Phrygian
+  4. Lydian
+  4. Mixolydian
+  4. This have unexpected behavior above 38 (roman "l" not handled yet)
+    1. Sublist after 2 levels deep:
+    3. they have unexpected behavior after z (simply uses chars `ord` for now)
+2. **Minor melodic scale modes**
+  - You can mix list styles
+  - (Who knows these modes names anyway)
 
 ## Quote blocks
 
