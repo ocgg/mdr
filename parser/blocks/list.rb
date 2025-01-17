@@ -44,7 +44,7 @@ class List < Block
 
     last_added = nil
     string_items.each_with_object([]) do |line, items|
-      left_part = line.slice!(/^\s*- /)
+      left_part = line.slice!(/^\s*[-*+] /)
 
       unless left_part
         last_added.content.append_str(" #{line}")
