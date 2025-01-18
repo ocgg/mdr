@@ -4,13 +4,13 @@ class ListItem
 
   def initialize(opts)
     @content = opts[:content]
-    @ordered = opts[:ordered]
+    @type = opts[:type]
     @tab = opts[:tab]
     @parent = opts[:parent]
     @children = opts[:children] || []
     @indent_level = opts[:indent_level] || 0
     @order_nb = opts[:order_nb]
-    @sign = @ordered ? find_ordered_sign : find_sign
+    @sign = find_sign
   end
 
   def indents = "#{@tab} " * @indent_level
@@ -42,11 +42,21 @@ class ListItem
     end
   end
 
-  def find_sign
+  def find_unordered_sign
     case @indent_level
     when 0 then "•"
     when 1 then "◦"
     else "▪"
+    end
+  end
+
+  def find_sign
+    case @type
+    when :unordered then find_unordered_sign
+    when :checkedbox then "☑" # 🗹 🮱 🗹 ☑☒
+    when :uncheckedbox then "☐" # ☐◼
+    else
+      find_ordered_sign
     end
   end
 end

@@ -19,7 +19,7 @@ class List < Block
     width = @width - indent_width
     sublines = content_to_lines(content: item.content, width:)
     sublines.each_with_index do |line, i|
-      sign = i.zero? ? item.sign : " "
+      sign = i.zero? ? item.sign : " " * item.sign.size
       prefix = "#{item.indents}#{sign}"
       lines << "#{TAB}#{prefix} #{line}"
     end
@@ -41,21 +41,31 @@ class List < Block
 
     string_items = string.split(/((?:.(?:\\\n)?)*?)\n/).reject(&:empty?)
     string_items.each do |line|
-      left_part = line.slice!(/^ *([-*+]|\d+[.)]) /)
+      left_part = line.slice!(/^ *([-*+](?: \[[Xx ]\])?|\d+[.)]) /)
 
       unless left_part
         @last_added.content.append_str(" #{line}")
         next @items
       end
 
-      ordered = left_part.match?(/\d/)
-      indent_level = (left_part.size - 2) / 2
+      type = find_type(left_part)
+      indent_level = left_part.slice!(/^ */).size / 2
       indent_diff = indent_level - @last_added.indent_level if @last_added
       parent = indent_level.zero? ? nil : find_parent(@last_added, indent_diff)
       order_nb = parent ? parent.children.size : @items.size
-      items_opts = {ordered:, tab: TAB, indent_level:, parent:, order_nb:, content: Text.new(line)}
+      items_opts = {type:, tab: TAB, indent_level:, parent:, order_nb:, content: Text.new(line)}
 
       add_item(parent, items_opts)
+    end
+  end
+
+  def find_type(left_part)
+    case left_part
+    when /\d/ then :ordered
+    when /\[[Xx]\]/ then :checkedbox
+    when /\[ \]/ then :uncheckedbox
+    else
+      :unordered
     end
   end
 
