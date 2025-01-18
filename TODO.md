@@ -46,7 +46,6 @@ Restructurer l'app comme suit:
 
 ## BUGFIXES
 
-- ordered list dépasse WIDTH
 - doublons de séquence de NOSTYLE
 
 ## TODO DANS LONGTEMPS

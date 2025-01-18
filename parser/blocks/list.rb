@@ -15,7 +15,7 @@ class List < Block
   # RENDERING #################################################################
 
   def item_to_lines(item, lines)
-    indent_width = TAB.size + item.indents.size + item.sign.size
+    indent_width = TAB.size + item.indents.size + item.sign.size + 1
     width = @width - indent_width
     sublines = content_to_lines(content: item.content, width:)
     sublines.each_with_index do |line, i|
