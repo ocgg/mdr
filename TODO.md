@@ -28,16 +28,14 @@ Restructurer l'app comme suit:
 ## TODO NEXT
 
 - mettre dans une constante globale: WIDTH
-- meilleurs tableaux + wanted newlines
-- Retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration
+- meilleurs tableaux
+- Mieux gérer les retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration, parenthèses, points, etc
 - ignorer les commentaires `<!-- -->`
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
 - ord list: aligner les chiffres à droite
 
 ### MD features
 
-- rendu de listes
-  - checkboxes
 - links variables
 - images (si supporté, sinon lien)
 - liens vers fichiers ?
