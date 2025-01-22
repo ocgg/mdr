@@ -54,7 +54,7 @@ class ListItem
     case @type
     when :unordered then find_unordered_sign
     when :checkedbox then "☑" # 🗹 🮱 🗹 ☑☒
-    when :uncheckedbox then "☐" # ☐◼
+    when :uncheckedbox then "☐" # ☐ ◼
     else
       find_ordered_sign
     end

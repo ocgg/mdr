@@ -23,7 +23,7 @@ Restructurer l'app comme suit:
 ## REFACTOs
 
 - text: utiliser String:partition au lieu de .match (lisibilité)
-- tous les (?:.(?:\\\n)?)*
+- tous les (?:.(?:\\\n)?)* (+ 2 espaces + `<br>`)
 
 ## TODO NEXT
 
@@ -33,6 +33,7 @@ Restructurer l'app comme suit:
 - ignorer les commentaires `<!-- -->`
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
 - ord list: aligner les chiffres à droite
+- ord list: tab de 3 espaces, pas 2
 
 ### MD features
 

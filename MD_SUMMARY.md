@@ -83,11 +83,11 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
   2. Phrygian
   4. Lydian
   4. And so on. The roman "l" is not handled yet. This means:
-    1. In 2 levels-deep, item numbers are not standard (i.e 50 is xxxxx)
+    1. In 2 levels-deep, item numbers are not standard above 38 (i.e 50 is xxxxx)
     1. As for 3 levels-deep list, after "z" is not handled yet:
     3. GitHub would print "aa", "ab" etc.
     4. Here it would print the next chars after "z" from the ASCII table (i.e. "{", then "|" etc.)
-    4. (Who writes 50 items ordered lists in markdown anyway ?)
+    4. (Who writes 50 items lists in markdown anyway ?)
 2. **Minor melodic scale modes**
   - You can mix list styles
   - (Who knows these modes names anyway ?)
@@ -95,7 +95,7 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 ### Checkboxes
 
 4. You should open an issue if :
-  - [ ] You do write 50 items ordered lists in markdown
+  - [ ] You do write 50 items lists in markdown
   - [x] You do know the names of minor melodic scale modes
 
 ## Quote blocks
