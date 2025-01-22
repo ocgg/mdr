@@ -3,7 +3,7 @@ require_relative "text"
 require_relative "list_item"
 
 class List < Block
-  TAB = "  "
+  TAB = 2
 
   def render(**opts)
     @width = opts[:width]
@@ -14,16 +14,7 @@ class List < Block
 
   # RENDERING #################################################################
 
-  def item_to_lines(item, lines)
-    indent_width = TAB.size + item.indents.size + item.sign.size + 1
-    width = @width - indent_width
-    sublines = content_to_lines(content: item.content, width:)
-    sublines.each_with_index do |line, i|
-      sign = i.zero? ? item.sign : " " * item.sign.size
-      prefix = "#{item.indents}#{sign}"
-      lines << "#{TAB}#{prefix} #{line}"
-    end
-  end
+  def tab = " " * TAB
 
   def list_to_lines(items = @items, lines = [])
     items.each do |item|
@@ -31,6 +22,16 @@ class List < Block
       list_to_lines(item.children, lines)
     end
     lines
+  end
+
+  def item_to_lines(item, lines)
+    width = @width - item.left_part_width
+    sublines = content_to_lines(content: item.content, width:)
+    sublines.each_with_index do |line, i|
+      sign = i.zero? ? item.sign : " " * item.sign.size
+      prefix = "#{item.indents}#{sign}"
+      lines << "#{prefix} #{line}"
+    end
   end
 
   # FORMATING #################################################################
@@ -42,19 +43,20 @@ class List < Block
     string_items = string.split(/((?:.(?:\\\n)?)*?)\n/).reject(&:empty?)
     string_items.each do |line|
       left_part = line.slice!(/^ *([-*+](?: \[[Xx ]\])?|\d+[.)]) /)
+      next @last_added.content.append_str(" #{line}") unless left_part
 
-      unless left_part
-        @last_added.content.append_str(" #{line}")
-        next @items
-      end
-
-      type = find_type(left_part)
       indent_level = left_part.slice!(/^ */).size / 2
       indent_diff = indent_level - @last_added.indent_level if @last_added
       parent = indent_level.zero? ? nil : find_parent(@last_added, indent_diff)
-      order_nb = parent ? parent.children.size : @items.size
-      items_opts = {type:, tab: TAB, indent_level:, parent:, order_nb:, content: Text.new(line)}
 
+      items_opts = {
+        tab: TAB,
+        type: find_type(left_part),
+        indent_level:,
+        parent:,
+        order_nb: parent ? parent.children.size : @items.size,
+        content: Text.new(line)
+      }
       add_item(parent, items_opts)
     end
   end
