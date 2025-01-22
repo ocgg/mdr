@@ -1,6 +1,6 @@
 # MD CLI RENDERER
 
-It's a little app written in ruby that aims to render markdown files in a nice way, directly in the terminal.
+It's a ruby script that aims to render markdown files in a close-to-github and nice way, directly in the terminal.
 
 I initially started to write it for [nuts](https://github.com/ocgg/nuts), a simple bash script to manage note-taking in markdown using `fzf`. Then I kept doing this in a separate repo, just to see if I could.
 
@@ -90,3 +90,4 @@ As for now, it **fully supports** (I think):
 - [ ] Opt: left & right margins
 - [ ] Opt: global background color
 - [ ] Give URL as file (to handle with `curl`)
+- [ ] Better performance
