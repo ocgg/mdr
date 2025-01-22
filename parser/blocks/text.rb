@@ -94,9 +94,10 @@ class Text
   end
 
   def spans_from_match_content(match_data)
-    @styles += delimiter_to_style(match_data[:open_tag])
+    style = delimiter_to_style(match_data[:open_tag])
+    @styles += style
     spans_from(match_data[:content])
-    @styles.pop # keep this here
+    @styles.pop(style.size) # keep this here
   end
 
   def add_link_span(match_data)
