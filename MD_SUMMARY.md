@@ -12,24 +12,11 @@
 
 ## Paragraphs
 
-This is a        paragraph.
+A simple paragraph. Newlines inside paragraphs,\
+are made using `\` then go newline. Or just do another paragraph.\
+Newlines with double-space or `<br>` will be handled soon.
 
-This
-is another one, which is deliberately quite long just to see if it prints well according to word-wrap options, or just      in regards to what value is set to **$TERM_WIDTH,\
-...\
- ...which** is normally set to the terminal width, or to 80 if it is greater than 80. Well I could stop here I think.
-
-Using two asterisks **this text is bold**. Two underscores __work as well__.
-
-Let's make it *italic\
-now*. You guessed it, _one underscore is also enough_.
-
-Can we combine **_both of that_?** Absolutely.    The same, with ***three stars***
-
-What if I want to ~~strikethrough~~?
-
-Let's print an `inline\
-code` (that should print the "\" and no newline) in this one. And with ``backticks `in it`?``, `and with     spaces and newlines in the middle` ?
+You can indeed use *italic*, **bold**, ***both***, inline code which will preserve spaces & `**special chars**`, ~underlines~ (this indeed is not true, as there is no underlines in markdown... but you can strike out as shown). [Links are also supported](https://www.perdu.com).
 
 ## Tables
 
@@ -64,16 +51,10 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
 ### Unordered
 
 - I ain't got:
-  * no home, ~no shoes~, no money
-  * no friends, no schooling, no work, no job, no mind, no father, no mother, no children, no faith, no Earth, no water, no ticket, no token
-  * ~no love~
-- Then *what have I got* that **nobody can take away** ?
-
-- I got:
-  - my hair,    my head, my brains
-  - my ears, my eyes, my nose, my mouth
-    - I got my smile
-    - ...
+  * no home
+  * ~no shoes~
+    - Then *what have I got* ?
+    - What I have got that **nobody can take away** ?
 
 ### Ordered
 
@@ -81,28 +62,22 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
   1. Ionian
   2. Dorian
   2. Phrygian
-  4. Lydian
-  4. And so on. The roman "l" is not handled yet. This means:
-    1. In 2 levels-deep, item numbers are not standard above 38 (i.e 50 is xxxxx)
-    1. As for 3 levels-deep list, after "z" is not handled yet:
-    3. GitHub would print "aa", "ab" etc.
-    4. Here it would print the next chars after "z" from the ASCII table (i.e. "{", then "|" etc.)
-    4. (Who writes 50 items lists in markdown anyway ?)
+  4. Note: roman numbers are not fully handled yet.
+    2. They would show `xxxxx` for 50th item yet
+    2. As for 3 levels-deep alphabetical lists : they would i.e. show `}` for 27th item yet (GH would show "aa")
+    2. (Who writes 50 items lists in markdown anyway ?)
 2. **Minor melodic scale modes**
   - You can mix list styles
   - (Who knows these modes names anyway ?)
 
 ### Checkboxes
 
-4. You should open an issue if :
+- You should open an issue if :
   - [ ] You do write 50 items lists in markdown
   - [x] You do know the names of minor melodic scale modes
 
 ## Quote blocks
 
-> My home is   on the water, I don't like no land at all - 
-I'd rather be dead than stay here and be your dog
-> 
 > I love you babe, but I hate your dirty ways\
 When I'm leaving this town I'm going away to stay
 > > *See, see      rider*
