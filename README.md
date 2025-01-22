@@ -73,16 +73,20 @@ As for now, it **fully supports** (I think):
 
 **Done**:
 
-- Nothing finished here
+- [X] Code syntax highlighting through `bat`
 
 **Partially done**:
 
-- [X] word-wrap, except in code blocks (not an opt yet)
+- [X] Word-wrap, except in code blocks (to improve & make it an option)
 
 **Todo**:
 
+- [ ] If `bat` not installed, find native solution for code syntax highlighting & display a message
+- [ ] Find better special chars for checkboxes, if any...
 - [ ] Opt: clean window before print
 - [ ] Opt: max width
 - [ ] Opt: print in X columns (with max width or regarding to window size)
 - [ ] Opt: layout: left/right/center
 - [ ] Opt: left & right margins
+- [ ] Opt: global background color
+- [ ] Give URL as file (to handle with `curl`)
