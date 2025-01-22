@@ -32,8 +32,8 @@ Restructurer l'app comme suit:
 - Mieux gérer les retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration, parenthèses, points, etc
 - ignorer les commentaires `<!-- -->`
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
-- ord list: aligner les chiffres à droite
 - ord list: tab de 3 espaces, pas 2
+- lists: mêmes indentations du texte quel que soit le type de liste
 
 ### MD features
 
