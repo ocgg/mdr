@@ -1,14 +1,10 @@
 class Renderer
-  def initialize(blocks, **opts)
+  def initialize(blocks, width:)
     @blocks = blocks
-    # TODO: manage opts
-    @opts = if opts.any? then opts
-    else
-      {width: 80, word_wrap: true}
-    end
+    @width = width
   end
 
-  def result
-    @blocks.map { |block| block.render(**@opts) }
+  def render
+    @blocks.map { |block| block.render(width: @width) }
   end
 end

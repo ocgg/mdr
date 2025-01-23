@@ -8,26 +8,41 @@ require_relative "parser"
 # Then displays the lines regarding to the CLI arguments received
 class Main
   def initialize(md_filepath, **opts)
-    @lm = " " * (opts[:margin_left] || opts[:margin] || 0)
-    @tm = "\n" * (opts[:margin_top] || opts[:margin] / 2 || 0)
-    @bm = "\n" * (opts[:margin_bottom] || opts[:margin] / 2 || 0)
+    term_width = `tput cols`.to_i
+    left = find_left(term_width, opts)
+    width = opts[:width] || term_width - left
+    margin = opts[:margin]
+    top = opts[:margin_top] || margin&.div(2) || 0
+    bottom = opts[:margin_bottom] || margin&.div(2) || 0
+
+    @margin_left = " " * left
+    @margin_top = "\n" * top
+    @margin_bottom = "\n" * bottom
     # @last_modified = File.mtime(filepath).strftime("%Y-%m-%d %H:%M")
     @parser = Parser.new(File.read(md_filepath))
-    @renderer = Renderer.new(@parser.blocks)
-    @results = @renderer.result
+    @renderer = Renderer.new(@parser.blocks, width:)
+    @results = @renderer.render
     render
   end
 
   private
 
+  def find_left(term_width, opts)
+    if opts[:center]
+      (term_width / 2) - (opts[:width] / 2)
+    else
+      opts[:margin_left] || opts[:margin] || 0
+    end
+  end
+
   def render
-    print @tm
+    print @margin_top
     @results.each_with_index do |block_lines, i|
-      block_lines.split("\n").each do |l|
-        puts "#{@lm}#{l}\n"
+      block_lines.split("\n").each do |line|
+        puts "#{@margin_left}#{line}\n"
       end
       puts unless i == @results.size - 1
     end
-    print @bm
+    print @margin_bottom
   end
 end

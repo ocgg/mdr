@@ -4,19 +4,35 @@ require "optparse"
 require_relative "lib/main"
 
 opts = {}
-OptionParser.new do |parser|
-  parser.banner = "Usage: mdr FILEPATH [options]"
-  {
-    margin: ["-m", "--margin=NUMBER", Integer, "Global margin (lines are divided by 2)"],
-    margin_top: ["-t", "--margin-top=LINES", Integer, "Top margin"],
-    # margin_right: ["-r", "--margin-right=COLS", Integer, "Right margin"]
-    margin_bottom: ["-b", "--margin-bottom=LINES", Integer, "Bottom margin"],
-    margin_left: ["-l", "--margin-left=COLS", Integer, "Left margin"]
-  }.each do |name, args|
-    parser.on(*args) { |val| opts[name] = val }
-  end
-end.parse!
+# required_opts = []
+file = nil
 
-raise "Please specify only one file." if ARGV.size > 1
+parser = OptionParser.new
+parser.banner = "Usage: mdr MARKDOWN_FILE_PATH [options]"
+parser.separator ""
+parser.separator "Options:"
+{
+  width: ["-w", "--width=COLS", Integer, "Max output width"],
+  margin: ["-m", "--margin=NUMBER", Integer, "Global margin (lines are divided by 2)"],
+  margin_top: ["-t", "--margin-top=LINES", Integer, "Top margin"],
+  margin_bottom: ["-b", "--margin-bottom=LINES", Integer, "Bottom margin"],
+  margin_left: ["-l", "--margin-left=COLS", Integer, "Left margin"],
+  # margin_right: ["-r", "--margin-right=COLS", Integer, "Right margin"],
+  center: ["-c", "--center", "Center output (use with --width)", "Left & right margins are ignored"]
+}.each do |name, args|
+  parser.on(*args)
+end
 
-Main.new(ARGF.filename, **opts)
+parser.order!(into: opts) do |non_opt_argv|
+  # This block is yielded only for non-options command line arguments
+  raise "Unknown additionnal argument: #{non_opt_argv}" if file
+  raise "File not found: #{non_opt_argv}" unless File.exist?(non_opt_argv)
+
+  file = non_opt_argv
+end
+
+raise "File not provided" unless file
+
+raise "Please specify --width when using --center" if opts[:center] && !opts[:width]
+
+Main.new(file, **opts)
