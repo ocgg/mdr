@@ -12,12 +12,13 @@ class Main
     left = find_left(term_width, opts)
     width = opts[:width] || term_width - left
     margin = opts[:margin]
-    top = opts[:margin_top] || margin&.div(2) || 0
-    bottom = opts[:margin_bottom] || margin&.div(2) || 0
+    top = opts[:mtop] || margin&.div(2) || 0
+    bottom = opts[:mbottom] || margin&.div(2) || 0
 
-    @margin_left = " " * left
-    @margin_top = "\n" * top
-    @margin_bottom = "\n" * bottom
+    @mleft = " " * left
+    @mtop = "\n" * top
+    @mbottom = "\n" * bottom
+    @clear = opts[:clear]
     # @last_modified = File.mtime(filepath).strftime("%Y-%m-%d %H:%M")
     @parser = Parser.new(File.read(md_filepath))
     @renderer = Renderer.new(@parser.blocks, width:)
@@ -28,21 +29,25 @@ class Main
   private
 
   def find_left(term_width, opts)
-    if opts[:center]
+    case opts[:align]
+    when "center"
       (term_width / 2) - (opts[:width] / 2)
+    when "right"
+      term_width - opts[:width] - (opts[:mright] || opts[:margin] || 0)
     else
-      opts[:margin_left] || opts[:margin] || 0
+      opts[:mleft] || opts[:margin] || 0
     end
   end
 
   def render
-    print @margin_top
+    puts `clear` if @clear
+    print @mtop
     @results.each_with_index do |block_lines, i|
       block_lines.split("\n").each do |line|
-        puts "#{@margin_left}#{line}\n"
+        puts "#{@mleft}#{line}\n"
       end
       puts unless i == @results.size - 1
     end
-    print @margin_bottom
+    print @mbottom
   end
 end

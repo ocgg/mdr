@@ -2,37 +2,51 @@
 
 require "optparse"
 require_relative "lib/main"
+require_relative "lib/argv_errors"
 
 opts = {}
-# required_opts = []
 file = nil
 
 parser = OptionParser.new
-parser.banner = "Usage: mdr MARKDOWN_FILE_PATH [options]"
+parser.banner = "\e[1mUsage:\e[0m mdr MARKDOWN_FILE_PATH [options]"
 parser.separator ""
-parser.separator "Options:"
-{
-  width: ["-w", "--width=COLS", Integer, "Max output width"],
-  margin: ["-m", "--margin=NUMBER", Integer, "Global margin (lines are divided by 2)"],
-  margin_top: ["-t", "--margin-top=LINES", Integer, "Top margin"],
-  margin_bottom: ["-b", "--margin-bottom=LINES", Integer, "Bottom margin"],
-  margin_left: ["-l", "--margin-left=COLS", Integer, "Left margin"],
-  # margin_right: ["-r", "--margin-right=COLS", Integer, "Right margin"],
-  center: ["-c", "--center", "Center output (use with --width)", "Left & right margins are ignored"]
-}.each do |name, args|
+parser.separator "\e[1mOptions:\e[0m"
+
+[
+  ["-w", "--width=COLS", Integer, "Max output width"],
+  ["-a", "--align=DIR", %w[left right center], "Align output \e[1m(use with --width)\e[0m", "DIR can be left, right or center"],
+  ["-t", "--mtop=LINES", Integer, "Top margin (empty lines before output)"],
+  ["-b", "--mbottom=LINES", Integer, "Bottom margin (empty lines after output)"],
+  ["-l", "--mleft=COLS", Integer, "Left margin"],
+  ["-r", "--mright=COLS", Integer, "Right margin"],
+  ["-m", "--margin=NUMBER", Integer, "Sets margin for the 4 sides with top & bottom divided by 2", "Side-specific margins have priority on this"],
+  ["-c", "--clear", "Clear screen before output"]
+].each do |args|
   parser.on(*args)
 end
 
-parser.order!(into: opts) do |non_opt_argv|
-  # This block is yielded only for non-options command line arguments
-  raise "Unknown additionnal argument: #{non_opt_argv}" if file
-  raise "File not found: #{non_opt_argv}" unless File.exist?(non_opt_argv)
+begin
+  parser.order!(into: opts) do |argv|
+    # This block is yielded only for non-options command line arguments
+    # Here argv should be a filepath and happen only once
+    raise ArgvErrors::UnknownArg, argv if file
+    raise ArgvErrors::FileNotFound, argv unless File.exist?(argv)
+    file = argv
+  end
 
-  file = non_opt_argv
+  raise ArgvErrors::FileNotProvided unless file
+  raise ArgvErrors::CenterWithNoWidth if opts[:align] && !opts[:width]
+rescue ArgvErrors::UnknownArg, ArgvErrors::FileNotFound,
+  ArgvErrors::FileNotProvided, ArgvErrors::CenterWithNoWidth => e
+  puts e.argv_msg
+  puts
+  puts parser.help
+  exit true
+rescue OptionParser::InvalidArgument => e
+  puts ArgvErrors.msg(e.message)
+  puts
+  puts parser.help
+  exit true
 end
-
-raise "File not provided" unless file
-
-raise "Please specify --width when using --center" if opts[:center] && !opts[:width]
 
 Main.new(file, **opts)
