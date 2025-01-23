@@ -26,9 +26,9 @@ sudo pacman -S bat # Arch
 
 - Clone this repo
 - Go to the clone directory
-- `ruby main.rb path-to-your-markdown-file`
+- Execute `./mdr PATH_TO_YOUR_MARKDOWN_FILE`
 
-In the future there will be options, see "Terminal-specific features" below.
+For more options like width, align, margin etc: see "Terminal-specific features" below or print help with `./mdr --help`.
 
 ## Examples
 
@@ -52,18 +52,19 @@ As for now, it **fully supports** (I think):
 - [X] Quotes
 - [X] Separators/Horizontal lines
 
-**Partial support** (to be fully supported in the future):
+**Future full support**:
 
-- [X] Newlines inside paragraphs/lists/quotes (works with `\` before newline only)
-- [X] Ordered lists (nested lists have unexpected behavior when more than ~26-39 items)
-- [X] Tables (dependency to tty-table will be removed in the future to handle that)
-- [X] Links to url (link references not supported yet)
+- [X] Newlines inside paragraphs/lists/quotes (currently only works with `\` before newline)
+- [X] Ordered lists (nested lists have unexpected behavior when more than ~26-39 items - but who writes lists that long?)
+- [X] Tables (can behave weirdly or cause errors: dependency to tty-table will be removed to handle that)
+- [X] URL links (link references not supported yet)
 
-**Will support**:
+**Will (sometimes partially) support**:
 
 - [ ] Images (if terminal supports them, else display link, or even draw a box with link)
 - [ ] Footnotes (won't provide a link but will display nicely)
-- [ ] Jump-to-section (same as footnotes)
+- [ ] Jump-to-section (same)
+- [ ] File links
 
 **Don't know if it will ever be supported**:
 
@@ -71,9 +72,29 @@ As for now, it **fully supports** (I think):
 
 ## Terminal-specific features
 
+```
+Usage: mdr FILEPATH [options]
+
+Options:
+    -w, --width=COLS                 Max output width
+    -a, --align=DIR                  Align output (use with --width)
+                                     DIR can be left, right or center
+    -t, --mtop=LINES                 Top margin (empty lines before output)
+    -b, --mbottom=LINES              Bottom margin (empty lines after output)
+    -l, --mleft=COLS                 Left margin
+    -r, --mright=COLS                Right margin
+    -m, --margin=NUMBER              Sets margin for the 4 sides with top & bottom divided by 2
+                                     Side-specific margins have priority on this
+    -c, --clear                      Clear screen before output
+```
+
 **Done**:
 
 - [X] Code syntax highlighting through `bat`
+- [X] Opt: max width
+- [X] Opt: align: left/right/center
+- [X] Opt: clean window before print
+- [X] Opt: left & right margins
 
 **Partially done**:
 
@@ -83,11 +104,7 @@ As for now, it **fully supports** (I think):
 
 - [ ] If `bat` not installed, find native solution for code syntax highlighting & display a message
 - [ ] Find better special chars for checkboxes, if any...
-- [ ] Opt: clean window before print
-- [ ] Opt: max width
 - [ ] Opt: print in X columns (with max width or regarding to window size)
-- [ ] Opt: layout: left/right/center
-- [ ] Opt: left & right margins
 - [ ] Opt: global background color
 - [ ] Give URL as file (to handle with `curl`)
 - [ ] Better performance
