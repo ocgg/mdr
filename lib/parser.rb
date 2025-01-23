@@ -1,10 +1,10 @@
-require_relative "parser/blocks/title"
-require_relative "parser/blocks/separator"
-require_relative "parser/blocks/codeblock"
-require_relative "parser/blocks/table"
-require_relative "parser/blocks/list"
-require_relative "parser/blocks/quote"
-require_relative "parser/blocks/paragraph"
+require_relative "blocks/title"
+require_relative "blocks/separator"
+require_relative "blocks/codeblock"
+require_relative "blocks/table"
+require_relative "blocks/list"
+require_relative "blocks/quote"
+require_relative "blocks/paragraph"
 
 # Parser parse a raw markdown file and translate it into Block objects.
 # NB: content formatting happens in Block class.

@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require_relative "lib/main"
+
+opts = {}
+OptionParser.new do |parser|
+  parser.banner = "Usage: mdr FILEPATH [options]"
+  {
+    margin: ["-m", "--margin=NUMBER", Integer, "Global margin (lines are divided by 2)"],
+    margin_top: ["-t", "--margin-top=LINES", Integer, "Top margin"],
+    # margin_right: ["-r", "--margin-right=COLS", Integer, "Right margin"]
+    margin_bottom: ["-b", "--margin-bottom=LINES", Integer, "Bottom margin"],
+    margin_left: ["-l", "--margin-left=COLS", Integer, "Left margin"]
+  }.each do |name, args|
+    parser.on(*args) { |val| opts[name] = val }
+  end
+end.parse!
+
+raise "Please specify only one file." if ARGV.size > 1
+
+Main.new(ARGF.filename, **opts)
