@@ -40,25 +40,20 @@ In the examples below, terminal is Kitty with Hack Nerd font
 <details>
   <summary>Unfold to see sample</summary>
   
-```markdown
-# H1: main title
+    ```markdown
+    # H1: main title
+    ## H2: big title
+    ### H3: less big title
+    #### H4: Subtitle or something
+    ##### H5: Little       title
+    ###### H6: Is it a *title* ?
 
-## H2: big title
+    Another syntax for H1
+    =====================
 
-### H3: less big title
-
-#### H4: Subtitle or something
-
-##### H5: Little       title
-
-###### H6: Is it a *title* ?
-
-Another syntax for H1
-=====================
-
-...And for H2
----
-```
+    ...And for H2
+    ---
+    ```
 
 Result:
 
