@@ -37,7 +37,9 @@ In the examples below, terminal is Kitty with Hack Nerd font
 ### Full support
 
 #### Titles/headings
-
+<details>
+  <summary>Unfold to see sample</summary>
+  
 ```markdown
 # H1: main title
 
@@ -61,6 +63,7 @@ Another syntax for H1
 Result:
 
 ![headings examples](./readme_examples/titles.png "headings examples")
+</details>
 
 ## Markdown features
 
