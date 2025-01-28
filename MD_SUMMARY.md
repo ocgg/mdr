@@ -67,15 +67,15 @@ end
 ### Ordered
 
 1. **Major scale modes**
-  1. Ionian
-  2. Dorian
-  2. Phrygian
-  2. Lydian
-    1) And so on.
-    2) these alphabetic sublist works weirdly after "z", but who writes lists that long in markdown anyway?
+   1. Ionian
+   2. Dorian
+   2. Phrygian
+   2. Lydian
+     1) And so on.
+     2) these alphabetic sublist works weirdly after "z", but who writes lists that long in markdown anyway?
 2. **Minor melodic scale modes**
-  - You can mix list styles
-  - (Who knows these modes names anyway?)
+   - You can mix list styles
+   - (Who knows these modes names anyway?)
 
 ### Checkboxes
 
