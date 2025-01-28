@@ -5,7 +5,7 @@ class Codeblock < Block
   def render(**opts)
     @width = opts[:width]
     lang_opt = @lang.empty? ? "" : "-l #{@lang}"
-    bat_opts = "-fP --style=snip --theme='Visual Studio Dark+' #{lang_opt}"
+    bat_opts = "-f --style=snip --theme='Visual Studio Dark+' #{lang_opt}"
     processed_code = `bat #{bat_opts} <<< "#{@code}"`.chomp
 
     code_to_lines(processed_code, @lang)
@@ -15,7 +15,11 @@ class Codeblock < Block
 
   def format(content)
     @lang = content.slice(/^```\w*/)[3..]
-    @code = content.lines[1..-2].join.gsub('"', %(\\")).gsub("`", %(\\\\`)).chomp
+    @code = content.lines[1..-2].join
+      .gsub("\\", "\\\\\\\\")
+      .gsub('"', %(\\"))
+      .gsub("`", %(\\\\`))
+      .chomp
     content
   end
 
