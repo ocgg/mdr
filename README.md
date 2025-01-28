@@ -1,4 +1,4 @@
-# MD CLI RENDERER
+# MD CLI Renderer
 
 It's a ruby script that aims to render markdown files in a close-to-github and nice way, directly in the terminal.
 
@@ -28,7 +28,7 @@ sudo pacman -S bat # Arch
 - Go to the clone directory
 - Execute `./mdr PATH_TO_YOUR_MARKDOWN_FILE`
 
-For more options like width, align, margin etc: see "Terminal-specific features" below or print help with `./mdr --help`.
+For more options like width, align, margin etc: see [Terminal-specific features](#terminal-specific-features) below or print help with `./mdr --help`.
 
 ## Examples
 
@@ -95,24 +95,3 @@ Options:
                                      Side-specific margins have priority on this
     -c, --clear                      Clear screen before output
 ```
-
-**Done**:
-
-- [X] Code syntax highlighting through `bat`
-- [X] Opt: max width
-- [X] Opt: align: left/right/center
-- [X] Opt: clean window before print
-- [X] Opt: left & right margins
-
-**Partially done**:
-
-- [X] Word-wrap, except in code blocks (to improve & make it an option)
-
-**Todo**:
-
-- [ ] If `bat` not installed, find native solution for code syntax highlighting & display a message
-- [ ] Find better special chars for checkboxes, if any...
-- [ ] Opt: print in X columns (with max width or regarding to window size)
-- [ ] Opt: global background color
-- [ ] Give URL as file (to handle with `curl`)
-- [ ] Better performance
