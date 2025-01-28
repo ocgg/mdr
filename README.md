@@ -1,4 +1,4 @@
-# MD CLI Renderer
+# MD CLI Renderer (mdr)
 
 It's a ruby script that aims to render markdown files in the terminal, in a close-to-GitHub and nice way.
 
@@ -38,7 +38,7 @@ Options:
 
 ## Examples
 
-The raw markdown file used for the example is here: [MD_SUMMARY.md](./MD_SUMMARY.md).
+If you want to compare with markdown code or GitHub way to display that, the example's markdown file [is here](./MD_SUMMARY.md).
 
 <details>
   <summary>See result</summary>
@@ -79,7 +79,9 @@ As for now, mdr **fully supports** (I think):
 - [ ] Footnotes (won't provide a link but will display nicely)
 - [ ] Jump-to-section (same)
 - [ ] File links
+- [ ] Render markdown from URL
 
 **Don't know if it will ever be supported**:
 
 - [ ] basic HTML (newlines, comments, strong, em, hr...)
+- [ ] Blazing fast performance (I'd be surprised but I'll work on this)
