@@ -42,7 +42,7 @@ Options:
 If you want to compare with raw markdown code or GitHub's style, the example's markdown file [is here](./MD_SUMMARY.md).
 
 <details>
-  <summary>Click here to see the example</summary>
+  <summary>**Click here to see the example**</summary>
 
   The terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font.
 

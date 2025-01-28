@@ -91,5 +91,3 @@ When I'm leaving this town I'm going away to stay
 > >
 > > *See what you've done*
 > > ...
-
-(That's Big Bill Broonzy)
