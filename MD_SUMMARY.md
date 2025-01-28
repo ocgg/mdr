@@ -8,7 +8,7 @@
 
 ##### H5: Little       title
 
-###### H6: Is it a *title* ?
+###### H6: Is _this_ a *title* ?
 
 Another syntax for H1,\
 that allows newlines in a title
@@ -27,17 +27,17 @@ Here is a separator to... separate the example titles above from the real titles
 A simple paragraph.\
 Newlines inside paragraphs, are made using "\" then go newline. Or just do another paragraph.
 
-You can use *italic*, **bold**, ***both***, `inline code` (which will preserve spaces & special chars), ~strikethrough~ and [links](https://github.com/ocgg/md_cli_renderer).\
-These are also usable in titles, tables, quotes etc.
+You can use *italic*, **bold**, ***both***, `inline code` (which will preserve spaces & special chars), ~strikethrough~ and [clickable links](https://github.com/ocgg/md_cli_renderer) (if your terminal supports it).\
+These are also usable in titles, tables, quotes etc. Oh, and everything is word-wrapped except in code blocks.
 
-## Tables
+## Tables (with `tty-table` gem)
 
 First line | are headers | and they're bold
 :--------|:---------:|---------------:
 left-aligned column | centered | right-aligned
 ...
 
-## Code blocks
+## Code blocks (with `bat`)
 
 ```
 Here whitespaces,     and **special chars**,\

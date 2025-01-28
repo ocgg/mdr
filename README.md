@@ -41,12 +41,38 @@ Options:
 
 If you want to compare with raw markdown code or GitHub's style, the example's markdown file [is here](./MD_SUMMARY.md).
 
+In the examples below, the terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font, and the max width is 80.
+
+**Click to see**
+
 <details>
-  <summary>**Click here to see the example**</summary>
+  <summary>Titles & separator</summary>
 
-  The terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font.
+  ![Titles](./readme_samples/titles-and-separator.png "Titles & separator")
+</details>
 
-  ![Examples](./example.png "Examples")
+<details>
+  <summary>Paragraphs</summary>
+
+  ![Paragraphs](./readme_samples/paragraphs.png "Paragraphs")
+</details>
+
+<details>
+  <summary>Tables</summary>
+
+  ![Tables](./readme_samples/tables.png "Tables")
+</details>
+
+<details>
+  <summary>Code blocks</summary>
+
+  ![Code blocks](./readme_samples/codeblocks.png "Code blocks")
+</details>
+
+<details>
+  <summary>Quotes</summary>
+
+  ![Quotes](./readme_samples/quotes.png "Quotes")
 </details>
 
 ## Objectives
