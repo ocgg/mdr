@@ -31,11 +31,13 @@ Restructurer l'app comme suit:
 - wanted newlines avec soit `\`, soit 2 espaces, soit `<br>`
 - ord list: tab de 3 espaces, pas 2
 - lists: mêmes indentations du texte quel que soit le type de liste
-- option pour afficher les longues notes sur 2 colonnes si termwidth > 160
+- option pour afficher les longues notes sur 2 colonnes
   - sur 2 colonnes, les links risquent de poser problème
 - TESTS: ça devrait être facile à écrire.
 - Mieux gérer les retours à la ligne: \&nbsp; à la place du dernier espace avant le dernier char d'un titre, et pour inline code decoration, parenthèses, points, etc
-- pouvoir donner un URL comme argument de main.rb
+- pouvoir donner un URL comme argument à mdr
+- ARGS: codeblock padding 
+- ARGS: bat opts
 
 ### MD features
 
