@@ -80,7 +80,7 @@ In the examples below, the terminal is Kitty with [Hack](https://github.com/sour
 `mdr` aims to render markdown the same way as GitHub would.\
 "*The same way*" here means "*the closest vs cleanest possible way*".
 
-- **Closest** from GitHub's behavior in markdown interpretation,
+- **Closest** from GitHub's behavior in markdown interpretation, following [this doc](https://docs.github.com/fr/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax),
 - **vs Cleanest** because the terminal is not a web browser.
 
 Here is a list of currently supported markdown features.
@@ -99,7 +99,7 @@ As for now, mdr **fully supports** (I think):
 **Future full support**:
 
 - [X] Newlines inside paragraphs/lists/quotes (currently only works with `\` before newline)
-- [X] Ordered lists (nested lists have unexpected behavior when more than ~26-39 items - but who writes lists that long?)
+- [X] Ordered lists (indentation not like GH for now, and nested lists have unexpected behavior when more than ~26-39 items - but who writes lists that long?)
 - [X] Tables (can behave weirdly or cause errors: dependency to tty-table will be removed to handle that)
 - [X] URL links (link references not supported yet)
 
