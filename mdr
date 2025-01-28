@@ -19,7 +19,7 @@ parser.separator "\e[1mOptions:\e[0m"
   ["-b", "--mbottom=LINES", Integer, "Bottom margin (empty lines after output)"],
   ["-l", "--mleft=COLS", Integer, "Left margin"],
   ["-r", "--mright=COLS", Integer, "Right margin"],
-  ["-m", "--margin=NUMBER", Integer, "Sets margin for the 4 sides with top & bottom divided by 2", "Side-specific margins have priority on this"],
+  ["-m", "--margin=NUMBER", Integer, "Sets margin for the 4 sides. Top & bottom divided by 2", "Specific margins have priority on this"],
   ["-c", "--clear", "Clear screen before output"]
 ].each do |args|
   parser.on(*args)
