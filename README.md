@@ -32,27 +32,14 @@ For more options like width, align, margin etc: see "Terminal-specific features"
 
 ## Examples
 
+The example is the result of showing [the MD_SUMMARY.md file](./MD_SUMMARY.md).
+
 <details>
-  <summary>See sample code</summary>
-  
-  ```markdown
-  # H1: main title
-  ## H2: big title
-  ### H3: less big title
-  #### H4: Subtitle or something
-  ##### H5: Little       title
-  ###### H6: Is it a *title* ?
+  <summary>See result</summary>
 
-  Another syntax for H1
-  =====================
+  In the example below, the terminal is Kitty with Hack Nerd font.  
 
-  ...And for H2
-  ---
-  ```
-
-  Result:
-
-  ![headings examples](./readme_examples/titles.png "headings examples")
+  ![Examples](./example.png "Examples")
 </details>
 
 ## Markdown features
