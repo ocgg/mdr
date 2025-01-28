@@ -10,12 +10,13 @@ Have installed:
 
 - Ruby (only tested >= 3.3.4, should work down to 3.0)
 - [tty-table](https://github.com/piotrmurach/tty-table) gem for table rendering: `gem install tty-table`
-- [bat](https://github.com/sharkdp/bat) for code blocks rendering (should be available with any Linux package manager, i.e. `sudo apt-get install bat`)
+- [bat](https://github.com/sharkdp/bat) for code blocks rendering (should be available with any Linux package manager, i.e. `sudo apt-get install bat` for Ubuntu)
 - Any modern terminal (tested on Kitty, Alacritty, gnome-terminal, ...) for RGB colors & link support
 
 ## Usage
 
-- Clone/download this repo & go to its directory
+- Clone/download this repo
+- Go to its directory
 - Execute `./mdr PATH_TO_MARKDOWN_FILE`.
 
 `./mdr --help` prints the command line arguments:
@@ -38,12 +39,12 @@ Options:
 
 ## Examples
 
-If you want to compare with markdown code or GitHub way to display that, the example's markdown file [is here](./MD_SUMMARY.md).
+If you want to compare with raw markdown code or GitHub's style, the example's markdown file [is here](./MD_SUMMARY.md).
 
 <details>
-  <summary>See result</summary>
+  <summary>Click here to see the example</summary>
 
-  In the example below, the terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font.
+  The terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font.
 
   ![Examples](./example.png "Examples")
 </details>
@@ -51,7 +52,10 @@ If you want to compare with markdown code or GitHub way to display that, the exa
 ## Objectives
 
 `mdr` aims to render markdown the same way as GitHub would.\
-"*The same way*" here means "*the closest vs cleanest possible way*", as it would benefit many things to be rendered differently in a terminal than in a browser.
+"*The same way*" here means "*the closest vs cleanest possible way*".
+
+- **Closest** from GitHub's behavior in markdown interpretation,
+- **vs Cleanest** because the terminal is not a web browser.
 
 Here is a list of currently supported markdown features.
 
@@ -78,7 +82,7 @@ As for now, mdr **fully supports** (I think):
 - [ ] Images (if terminal supports them, else display link, or even draw a box with link)
 - [ ] Footnotes (won't provide a link but will display nicely)
 - [ ] Jump-to-section (same)
-- [ ] File links
+- [ ] Links to local files
 - [ ] Render markdown from URL
 
 **Don't know if it will ever be supported**:
