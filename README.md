@@ -32,7 +32,7 @@ For more options like width, align, margin etc: see "Terminal-specific features"
 
 ## Examples
 
-The example is the result of showing [the MD_SUMMARY.md file](./MD_SUMMARY.md).
+The raw markdown file used for the example is here: [[./MD_SUMMARY.md]].
 
 <details>
   <summary>See result</summary>
