@@ -10,46 +10,48 @@
 
 ###### H6: Is it a *title* ?
 
-Another syntax for H1
+Another syntax for H1,\
+that allows newlines in a title
 =====================
 
-...And for H2
+...The same,\
+for a 2nd level heading
+---
+
+Here is a separator to highlight the fact that the next title is a real title for the next section, not an example:
+
 ---
 
 ## Paragraphs
 
 A simple paragraph. Newlines inside paragraphs,\
-are made using `\` then go newline. Or just do another paragraph.\
-Newlines with double-space or `<br>` will be handled soon.
+are made using "\" then go newline. Or just do another paragraph.
 
-You can indeed use *italic*, **bold**, ***both***, inline code which will preserve spaces & `**special chars**`, ~underlines~ (this indeed is not true, as there is no underlines in markdown... but you can strike out as shown). [Links are also supported](https://www.perdu.com).
+You can use *italic*, **bold**, ***both***, `inline code` (which will preserve spaces & special chars), ~strikethrough~ and [links](https://www.perdu.com).\
+These are also usable in titles, tables, quotes etc.
 
 ## Tables
 
-| This is | an actual | Taabeeeeeuuuul |
-|:--------|:---------:|---------------:|
-| With | random | columns |
-| just **to be     sure** | *that*          it | `works` |
-| And | it | should |
+First line | are headers | and they're bold
+:--------|:---------:|---------------:
+left-aligned column | centered | right-aligned
+...
 
 ## Code blocks
 
 ```
-{
-
-  learning: "Markdown",
-
-  showing: "block code snippet with empty lines"
-
-}
+Here whitespaces,     and **special \
+chars**, are kept as is. Also, long lines will not be word-wrapped in a code block.
 ```
 
-```js
-const x = "Block code snippet in JS";
-console.log(x);
-
-// Another deliberately long line
-array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.getElementByID(`is-this-really-my-element-id`).innerText != 'Heeeeell yeah') ? console.log("Yeah, yeah, yeah") : alert("Whoever uses alerts anyway ?") })
+```ruby
+def show_syntax_highlighting
+    # If specified, the language appears at the top right of that block.
+    # Until I make something more user-friendly, you can change options passed
+    # to bat in lib/blocks/codeblock.rb (i.e. theme, show line number etc.)
+    msg = "bat is a really cool tool that can highlight your code in terminal"
+    {msg:, link: "https://github.com/sharkdp/bat"}
+end
 ```
 
 ## Lists
@@ -68,19 +70,19 @@ array.reduce((acc, sum) => { (sum * 1524039 + x >= random_variable && document.g
   1. Ionian
   2. Dorian
   2. Phrygian
-  4. Note: roman numbers are not fully handled yet.
-    2. They would show `xxxxx` for 50th item yet
-    2. As for 3 levels-deep alphabetical lists : they would i.e. show `}` for 27th item yet (GH would show "aa")
-    2. (Who writes 50 items lists in markdown anyway ?)
+  2. Lydian
+    1) And so on.
+    2) these alphabetic sublist works weirdly after "z", but who writes lists that long in markdown anyway?
 2. **Minor melodic scale modes**
   - You can mix list styles
-  - (Who knows these modes names anyway ?)
+  - (Who knows these modes names anyway?)
 
 ### Checkboxes
 
 - You should open an issue if :
   - [ ] You do write 50 items lists in markdown
   - [x] You do know the names of minor melodic scale modes
+  - [X] Note that unicode characters for checkboxes suck. I'll try to find something better.
 
 ## Quote blocks
 
@@ -90,10 +92,5 @@ When I'm leaving this town I'm going away to stay
 > >
 > > *See what you've done*
 > > ...
-
-## Links
-
-Texte avant, [**premier**     lien](https://www.perdu.com), milieu, [deuxième\
-lien](https://www.sonelec.com),    and [how it goes if the link text is soooooo long that it takes one or several lines ??](https://www.perdu.com)
 
 ---
