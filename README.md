@@ -1,34 +1,40 @@
 # MD CLI Renderer
 
-It's a ruby script that aims to render markdown files in a close-to-github and nice way, directly in the terminal.
+It's a ruby script that aims to render markdown files in the terminal, in a close-to-GitHub and nice way.
 
-I initially started to write it for [nuts](https://github.com/ocgg/nuts), a simple bash script to manage note-taking in markdown using `fzf`. Then I kept doing this in a separate repo, just to see if I could.
+I initially started to write it for [nuts](https://github.com/ocgg/nuts), a simple bash script to manage markdown note-taking using [fzf](https://github.com/fuzzy-finder/fzf). Then I kept doing this in a separate repo, just to see if I could.
 
 ## Prerequisites
 
-- ruby (only tested >= 3.3.4, should work down to 3.0)
-- `tty-table` gem for table rendering
-- `bat` for code blocks rendering
+Have installed:
+
+- Ruby (only tested >= 3.3.4, should work down to 3.0)
+- [tty-table](https://github.com/piotrmurach/tty-table) gem for table rendering: `gem install tty-table`
+- [bat](https://github.com/sharkdp/bat) for code blocks rendering (should be available with any Linux package manager, i.e. `sudo apt-get install bat`)
 - Any modern terminal (tested on Kitty, Alacritty, gnome-terminal, ...) for RGB colors & link support
-
-```bash
-# With ruby installed
-gem install tty-table
-
-# Have bat installed with you OS package manager, i.e. :
-sudo apt-get install bat # Ubuntu
-sudo dnf install bat # Fedora
-sudo pacman -S bat # Arch
-# ...
-```
 
 ## Usage
 
-- Clone this repo
-- Go to the clone directory
-- Execute `./mdr PATH_TO_YOUR_MARKDOWN_FILE`
+- Clone/download this repo & go to its directory
+- Execute `./mdr PATH_TO_MARKDOWN_FILE`.
 
-For more options like width, align, margin etc: see [Terminal-specific features](#terminal-specific-features) below or print help with `./mdr --help`.
+`./mdr --help` prints the command line arguments:
+
+```
+Usage: mdr MARKDOWN_FILE_PATH [options]
+
+Options:
+    -w, --width=COLS                 Max output width
+    -a, --align=DIR                  Align output (use with --width)
+                                     DIR can be left, right or center
+    -t, --mtop=LINES                 Top margin (empty lines before output)
+    -b, --mbottom=LINES              Bottom margin (empty lines after output)
+    -l, --mleft=COLS                 Left margin
+    -r, --mright=COLS                Right margin
+    -m, --margin=NUMBER              Sets margin for the 4 sides. Top & bottom divided by 2
+                                     Specific margins have priority on this
+    -c, --clear                      Clear screen before output
+```
 
 ## Examples
 
@@ -37,26 +43,26 @@ The raw markdown file used for the example is here: [MD_SUMMARY.md](./MD_SUMMARY
 <details>
   <summary>See result</summary>
 
-  In the example below, the terminal is Kitty with Hack Nerd font.  
+  In the example below, the terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font.
 
   ![Examples](./example.png "Examples")
 </details>
 
-## Markdown features
+## Objectives
 
-This app (the name's still to be found) aims to render markdown the same way as GitHub would.\
-"*The same way*" here means "*the closest vs cleanest possible way*", as the terminal is indeed not a browser.
+`mdr` aims to render markdown the same way as GitHub would.\
+"*The same way*" here means "*the closest vs cleanest possible way*", as it would benefit many things to be rendered differently in a terminal than in a browser.
 
-Here is a list of supported markdown features. To see terminal-specific features, see below.
+Here is a list of currently supported markdown features.
 
-As for now, it **fully supports** (I think):
+As for now, mdr **fully supports** (I think):
 
 - [X] Titles/headings
 - [X] Paragraphs
 - [X] Unordered/checkbox/mixed lists
 - [X] Italic/bold/stroke text
 - [X] Code blocks & inline code
-- [X] Code syntax highlighting (through `bat`)
+- [X] Code syntax highlighting (through [bat](https://github.com/sharkdp/bat))
 - [X] Quotes
 - [X] Separators/Horizontal lines
 
@@ -67,7 +73,7 @@ As for now, it **fully supports** (I think):
 - [X] Tables (can behave weirdly or cause errors: dependency to tty-table will be removed to handle that)
 - [X] URL links (link references not supported yet)
 
-**Will (sometimes partially) support**:
+**Will, or will partially, support**:
 
 - [ ] Images (if terminal supports them, else display link, or even draw a box with link)
 - [ ] Footnotes (won't provide a link but will display nicely)
@@ -77,21 +83,3 @@ As for now, it **fully supports** (I think):
 **Don't know if it will ever be supported**:
 
 - [ ] basic HTML (newlines, comments, strong, em, hr...)
-
-## Terminal-specific features
-
-```
-Usage: mdr FILEPATH [options]
-
-Options:
-    -w, --width=COLS                 Max output width
-    -a, --align=DIR                  Align output (use with --width)
-                                     DIR can be left, right or center
-    -t, --mtop=LINES                 Top margin (empty lines before output)
-    -b, --mbottom=LINES              Bottom margin (empty lines after output)
-    -l, --mleft=COLS                 Left margin
-    -r, --mright=COLS                Right margin
-    -m, --margin=NUMBER              Sets margin for the 4 sides with top & bottom divided by 2
-                                     Side-specific margins have priority on this
-    -c, --clear                      Clear screen before output
-```
