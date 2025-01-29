@@ -41,7 +41,7 @@ Options:
 
 If you want to compare with raw markdown code or GitHub's style, the example's markdown file [is here](./MD_SUMMARY.md).
 
-In the examples below, the terminal is Kitty with [Hack](https://github.com/source-foundry/Hack) font, and the max width is 80.
+In the examples below, the terminal is [Kitty](https://github.com/kovidgoyal/kitty) with [Hack](https://github.com/source-foundry/Hack) font, and the max width is 80.
 
 **Click to see**
 
@@ -114,4 +114,5 @@ As for now, mdr **fully supports** (I think):
 **Don't know if it will ever be supported**:
 
 - [ ] basic HTML (newlines, comments, strong, em, hr...)
-- [ ] Blazing fast performance (I'd be surprised but I'll work on this)
+- [ ] Blazing fast performance (I'd be surprised but I'll work on this)\
+      Currently process any file <3000 chars long in ~200ms with a middle/low-end CPU
